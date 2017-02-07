@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -79,26 +78,20 @@ class CalcFrontEnd extends VBox {
          * Each row is set to be centered.*/
         HBox row1 = new HBox();
         row1.getChildren().addAll(btCE, btC, btBack, btDiv);
-        row1.alignmentProperty().set(Pos.CENTER);
 
         HBox row2 = new HBox();
         row2.getChildren().addAll(bt7, bt8, bt9, btMult);
-        row2.alignmentProperty().set(Pos.CENTER);
 
         HBox row3 = new HBox();
         row3.getChildren().addAll(bt4, bt5, bt6, btSub);
-        row3.alignmentProperty().set(Pos.CENTER);
 
         HBox row4 = new HBox();
         row4.getChildren().addAll(bt1, bt2, bt3, btAdd);
-        row4.alignmentProperty().set(Pos.CENTER);
 
         HBox row5 = new HBox();
         row5.getChildren().addAll(btNeg, bt0, btDec, btEquals);
-        row5.alignmentProperty().set(Pos.CENTER);
 
-        /**Set Vbox to bet centered and add all hboxes*/
-        this.alignmentProperty().set(Pos.CENTER);
+        /*add all hboxes*/
         this.getChildren().addAll(row0, row1, row2, row3, row4, row5);
     }
 }
