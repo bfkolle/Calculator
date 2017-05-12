@@ -20,9 +20,12 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Scene scene = new Scene(frontend, 400, 400);
-        frontend.prefWidthProperty().bind(scene.widthProperty()); //Bind min width of vbox to scene's width
-        frontend.prefHeightProperty().bind(scene.heightProperty()); //Bind min height of vbox to scene's height
 
+        frontend.prefWidthProperty().bind(scene.widthProperty()); //Bind min width of calculator to scene's width
+        frontend.prefHeightProperty().bind(scene.heightProperty()); //Bind min height of calculator to scene's height
+
+        primaryStage.setMinHeight(425);
+        primaryStage.setMinWidth(425);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calculator");
         primaryStage.show();
@@ -36,18 +39,7 @@ public class main extends Application {
 
 class Calculator extends VBox {
 
-    //Declare each button of calculator
-    public Button btCE = new Button("CE"), btC = new Button("C"), btBack = new Button("<--"),
-            btDiv = new Button("/"),  bt7 = new Button("7"), bt8 = new Button("8"),
-            bt9 = new Button("9"), btMult = new Button("*"), bt4 = new Button("4"),
-            bt5 = new Button("5"), bt6 = new Button("6"), btSub = new Button("-"),
-            bt1 = new Button("1"), bt2 = new Button("2"), bt3 = new Button("3"),
-            btAdd = new Button("+"), btNeg = new Button("Neg"), bt0 = new Button("0"),
-            btDec = new Button("."), btEquals = new Button("=");
-
-    private ArrayList<Button> buttonHolder = new ArrayList<>(); //ArrayList to hold all of the buttons
-
-    private Text display = new Text("5"); //Text box for display
+    private Text display = new Text("0"); //Text box for display
 
     private double value = 0; //Value for arithmetic purposes
 
@@ -57,6 +49,18 @@ class Calculator extends VBox {
 
     //Default constructor sets up calculator graphics
     public Calculator() {
+
+        //Declare each button of calculator
+        Button btCE = new Button("CE"), btC = new Button("C"), btBack = new Button("<--"),
+                btDiv = new Button("/"),  bt7 = new Button("7"), bt8 = new Button("8"),
+                bt9 = new Button("9"), btMult = new Button("*"), bt4 = new Button("4"),
+                bt5 = new Button("5"), bt6 = new Button("6"), btSub = new Button("-"),
+                bt1 = new Button("1"), bt2 = new Button("2"), bt3 = new Button("3"),
+                btAdd = new Button("+"), btNeg = new Button("Neg"), bt0 = new Button("0"),
+                btDec = new Button("."), btEquals = new Button("=");
+
+        ArrayList<Button> buttonHolder = new ArrayList<>(); //ArrayList to hold all of the buttons
+
 
         //Add all buttons to buttonHolder arrayList
         Collections.addAll(buttonHolder, btCE, btC, btBack, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
@@ -107,6 +111,12 @@ class Calculator extends VBox {
 
         btDiv.setOnAction(e -> this.divide());
 
+        btMult.setOnAction(e -> this.multiply());
+
+        btSub.setOnAction(e -> this.subtract());
+
+        btAdd.setOnAction(e -> this.add());
+
         btEquals.setOnAction(e -> this.equal(operatorIndicator));
 
         bt9.setOnAction(e -> this.nine(9));
@@ -128,32 +138,31 @@ class Calculator extends VBox {
         bt1.setOnAction(e -> this.one(1));
     }
 
-    //method to change the text displayed
-    public void changeDisplay(double num) {
+    private void changeDisplay(double num) {
         display.setText(Double.toString(num));
     }
 
-    public void add(double num) {
+    private void add() {
         operatorIndicator = 4;
         display.setText(display.getText() + " + ");
     }
 
-    public void subtract(double num) {
+    private void subtract() {
         operatorIndicator = 3;
         display.setText(display.getText() + " - ");
     }
 
-    public void multiply(double num) {
+    private void multiply() {
         operatorIndicator = 2;
         display.setText(display.getText() + " * ");
     }
 
-    public void divide() {
+    private void divide() {
         operatorIndicator = 1;
         display.setText(display.getText() + " / ");
     }
 
-    public void equal(int num) {
+    private void equal(int num) {
 
         switch(num) {
 
@@ -167,24 +176,27 @@ class Calculator extends VBox {
                     break;
                 }
                 else {
-                    value /= input;
-                    this.changeDisplay(value);
+                    input /= value;
+                    this.changeDisplay(input);
                     operatorIndicator = 0;
                     break;
                 }
 
             case 2:
-                value *= num;
+                input *= value;
+                this.changeDisplay(input);
                 operatorIndicator = 0;
                 break;
 
             case 3:
-                value -= num;
+                input -= value;
+                this.changeDisplay(input);
                 operatorIndicator = 0;
                 break;
 
             case 4:
-                value += num;
+                input += value;
+                this.changeDisplay(input);
                 operatorIndicator = 0;
                 break;
         }
@@ -196,50 +208,60 @@ class Calculator extends VBox {
 
     private void clearAll() {
         value = 0;
+        operatorIndicator = 0;
         this.changeDisplay(value);
     }
 
     private void nine(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void eight(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void seven(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void six(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void five(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void four(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void three(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void two(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
 
     private void one(double num) {
+        input = value;
         value = num;
         this.changeDisplay(value);
     }
