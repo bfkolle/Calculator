@@ -114,10 +114,6 @@ public class Calculator extends VBox {
         bt0.setOnAction(e -> this.number(0));
     }
 
-    private void changeDisplay(double num) {
-        display.setText(Double.toString(num));
-    }
-
     private void add() {
         operationIndicator = 4;
         display.setText(display.getText() + " + ");
@@ -153,26 +149,26 @@ public class Calculator extends VBox {
                 }
                 else {
                     valueTwo /= value;
-                    this.changeDisplay(valueTwo);
+                    display.setText(Double.toString(valueTwo));
                     operationIndicator = 0;
                     break;
                 }
 
             case 2:
                 valueTwo *= value;
-                this.changeDisplay(valueTwo);
+                display.setText(Double.toString(valueTwo));
                 operationIndicator = 0;
                 break;
 
             case 3:
                 valueTwo -= value;
-                this.changeDisplay(valueTwo);
+                display.setText(Double.toString(valueTwo));
                 operationIndicator = 0;
                 break;
 
             case 4:
                 valueTwo += value;
-                this.changeDisplay(valueTwo);
+                display.setText(Double.toString(valueTwo));
                 operationIndicator = 0;
                 break;
         }
@@ -180,20 +176,20 @@ public class Calculator extends VBox {
 
     private void clearScreen() {
         operationIndicator = 0;
-        this.changeDisplay(0);
+        display.setText("0");
     }
 
     private void clearAll() {
         value = 0;
         valueTwo = 0;
         operationIndicator = 0;
-        this.changeDisplay(value);
+        display.setText(Double.toString(value));
     }
 
     private void number(double num) {
         valueTwo = value;
         value = num;
-        this.changeDisplay(value);
+        display.setText(Double.toString(value));
     }
 
 }
