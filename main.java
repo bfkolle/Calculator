@@ -5,20 +5,20 @@ import javafx.scene.Scene;
 /**
  * Created by Brandon Kolle on 12/22/2016.
  * This is a calculator program using the public class main as the main class,
- * and the sub class for the frontend and backend.
+ * and the Calculator class for
  */
 
 public class main extends Application {
 
-     public Calculator frontend = new Calculator(); //Declare object for calculator front end
+    final int WIDTH = 400; //width of calculator
+    final int HEIGHT = 400; //height of calculator
+    public Calculator calculator = new Calculator(WIDTH, HEIGHT); //Declare object for calculator front end
 
     @Override
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(frontend, 400, 400);
+        Scene scene = new Scene(calculator, WIDTH, HEIGHT);
 
-        frontend.prefWidthProperty().bind(scene.widthProperty()); //Bind min width of calculator to scene's width
-        frontend.prefHeightProperty().bind(scene.heightProperty()); //Bind min height of calculator to scene's height
-
+        primaryStage.setResizable(false);
         primaryStage.setMinHeight(425);
         primaryStage.setMinWidth(425);
         primaryStage.setScene(scene);
