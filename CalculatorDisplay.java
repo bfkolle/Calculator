@@ -8,11 +8,13 @@ import javafx.scene.text.Text;
 /**
  * Created by bfkol on 7/7/2017.
  */
+
 public class CalculatorDisplay extends VBox{
 
     private Text display = new Text("0");
 
-    public CalculatorDisplay(int width, int height) {
+    CalculatorDisplay(int width, int height) {
+
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 45));
 
         HBox displayRow = new HBox();
@@ -20,6 +22,11 @@ public class CalculatorDisplay extends VBox{
         displayRow.minWidthProperty().setValue(width);
         displayRow.minHeightProperty().setValue(height / 6.0);
         displayRow.getChildren().add(display);
+
+        this.getChildren().add(display);
     }
 
+    public void setDisplay(String s) {
+        display.setText(s);
+    }
 }

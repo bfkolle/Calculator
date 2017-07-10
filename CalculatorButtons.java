@@ -9,11 +9,14 @@ import java.util.Collections;
 /**
  * Created by bfkol on 7/7/2017.
  */
-public class CalculatorButtons extends VBox {
 
-    public CalculatorButtons(int width, int height) {
+ public class CalculatorButtons extends VBox {
 
-        CalculatorActions actions = new CalculatorActions();
+     private CalculatorActions actions;
+
+    public CalculatorButtons(int width, int height, CalculatorDisplay display) {
+
+        actions = new CalculatorActions(display);
 
         //ArrayList to hold all of the buttons
         ArrayList<Button> buttonHolder = new ArrayList<>();
@@ -70,7 +73,7 @@ public class CalculatorButtons extends VBox {
 
         btAdd.setOnAction(e -> actions.add());
 
-        btEquals.setOnAction(e -> actions.equal(operationIndicator));
+        btEquals.setOnAction(e -> actions.equal(actions.getOperationIndicator()));
 
         bt9.setOnAction(e -> actions.number("9"));
 

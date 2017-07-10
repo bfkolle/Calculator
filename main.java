@@ -11,16 +11,18 @@ import javafx.scene.Scene;
 public class main extends Application {
 
     final int WIDTH = 400; //width of calculator
+
     final int HEIGHT = 400; //height of calculator
-    public Calculator calculator = new Calculator(WIDTH, HEIGHT); //Declare object for calculator front end
+
+    Calculator calculator = new Calculator(WIDTH, HEIGHT); //Declare object for calculator front end
 
     @Override
     public void start(Stage primaryStage) {
         Scene scene = new Scene(calculator, WIDTH, HEIGHT);
 
         primaryStage.setResizable(false);
-        primaryStage.setMinHeight(425);
-        primaryStage.setMinWidth(425);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(400);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calculator");
         primaryStage.show();

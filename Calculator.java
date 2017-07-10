@@ -9,13 +9,11 @@ public class Calculator extends VBox {
     //Constructor sets up calculator graphics
     public Calculator(int width, int height) {
 
-        CalculatorButtons buttons = new CalculatorButtons(width, height);
+        CalculatorDisplay display = new CalculatorDisplay(width, height); //object to manage calculator display
 
-        CalculatorDisplay display = new CalculatorDisplay(width, height);
+        CalculatorButtons buttons = new CalculatorButtons(width, height, display); //object to manage calculator buttons
 
-        //Add all rows
+        //Add the rows
         this.getChildren().addAll(display, buttons);
     }
-
-
 }

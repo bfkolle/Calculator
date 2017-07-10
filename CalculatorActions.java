@@ -1,6 +1,7 @@
 /**
- * Created by bfkol on 7/7/2017.
+ * Created by bfkol on 7/9/2017.
  */
+
 public class CalculatorActions {
 
     private String displayValue = ""; //Value to be displayed
@@ -11,10 +12,21 @@ public class CalculatorActions {
 
     private int operationIndicator = 0; //tells equals method which operation to perform
 
+    private CalculatorDisplay display; //holder for passed display object declared in Calculator class
+
+
+    public CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
+        this.display = display;
+    }
+
+    public int getOperationIndicator() {
+        return operationIndicator;
+    }
+
     void add() {
         operationIndicator = 1;
         displayValue += " + ";
-        display.setText(displayValue);
+        display.setDisplay(displayValue);
         displayValue = "";
     }
 
@@ -44,12 +56,12 @@ public class CalculatorActions {
                 if (operandOne % Math.floor(operandOne) == 0) {
                     int x = (int)operandOne;
                     displayValue = Integer.toString(x);
-                    display.setText(displayValue);
+                    display.setDisplay(displayValue);
                     break;
                 }
                 else {
                     displayValue = Double.toString(operandOne);
-                    display.setText(displayValue);
+                    display.setDisplay(displayValue);
                     break;
                 }
 
@@ -70,7 +82,7 @@ public class CalculatorActions {
     void clearEntry() {
         operationIndicator = 0;
         displayValue = "";
-        display.setText("0");
+        display.setDisplay("0");
     }
 
     void clear() {
@@ -78,12 +90,12 @@ public class CalculatorActions {
         operandTwo = 0;
         operationIndicator = 0;
         displayValue = "";
-        display.setText("0");
+        display.setDisplay("0");
     }
 
     void number(String s) {
         displayValue += s;
-        display.setText(displayValue);
+        display.setDisplay(displayValue);
 
         if (operationIndicator != 0) {
             operandOne = Double.parseDouble(displayValue);
