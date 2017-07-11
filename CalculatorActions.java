@@ -2,7 +2,7 @@
  * Created by bfkol on 7/9/2017.
  */
 
-public class CalculatorActions {
+class CalculatorActions {
 
     private String displayValue = ""; //Value to be displayed
 

@@ -10,12 +10,16 @@ import java.util.Collections;
  * Created by bfkol on 7/7/2017.
  */
 
- public class CalculatorButtons extends VBox {
+class CalculatorButtons extends VBox {
 
      private CalculatorActions actions;
 
-    public CalculatorButtons(int width, int height, CalculatorDisplay display) {
+    public CalculatorButtons(int width, int height) {
 
+        //Create row for display
+        CalculatorDisplay display = new CalculatorDisplay(width, height);
+
+        //Create object for button actions
         actions = new CalculatorActions(display);
 
         //ArrayList to hold all of the buttons
@@ -36,13 +40,12 @@ import java.util.Collections;
 
         //Set each button so it will grow to fit space, and set to bold
         for (int i = 0; i < buttonHolder.size(); i++) {
-            buttonHolder.get(i).minWidthProperty().setValue(width / 4.0);
-            buttonHolder.get(i).minHeightProperty().setValue(height / 6.0);
+            buttonHolder.get(i).minWidthProperty().bind(this.widthProperty().divide(4.0));
+            buttonHolder.get(i).minHeightProperty().bind(this.heightProperty().divide(6.0));
             buttonHolder.get(i).setFont(Font.font("sans serif", FontWeight.BOLD, 30 ));
         }
 
         //Create each row of the calculator as a hbox
-        //Each row holds 4 buttons of the calculator
         HBox row1 = new HBox();
         row1.getChildren().addAll(btCE, btC, btBack, btDiv);
 
@@ -58,7 +61,11 @@ import java.util.Collections;
         HBox row5 = new HBox();
         row5.getChildren().addAll(btNeg, bt0, btDec, btEquals);
 
-        this.getChildren().addAll(row1, row2, row3, row4, row5);
+        //Format display row
+        display.minWidthProperty().bind(this.minWidthProperty().divide(4.0));
+        display.minHeightProperty().bind(this.minHeightProperty().divide(6.0));
+
+        this.getChildren().addAll(display, row1, row2, row3, row4, row5);
 
         //Assign lambda event handler to each button
         btCE.setOnAction(e -> actions.clearEntry());
