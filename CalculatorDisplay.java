@@ -12,7 +12,7 @@ class CalculatorDisplay extends HBox{
 
     private Text display = new Text("0");
 
-    CalculatorDisplay(int width, int height) {
+    CalculatorDisplay() {
 
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 50));
 

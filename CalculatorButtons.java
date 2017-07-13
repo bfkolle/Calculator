@@ -12,12 +12,12 @@ import java.util.Collections;
 
 class CalculatorButtons extends VBox {
 
-     private CalculatorActions actions;
+    private CalculatorActions actions;
 
-    public CalculatorButtons(int width, int height) {
+    //Create row for display
+    CalculatorDisplay display = new CalculatorDisplay();
 
-        //Create row for display
-        CalculatorDisplay display = new CalculatorDisplay(width, height);
+    CalculatorButtons() {
 
         //Create object for button actions
         actions = new CalculatorActions(display);
