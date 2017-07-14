@@ -4,104 +4,104 @@
 
 class CalculatorActions {
 
-    private String displayValue = ""; //Value to be displayed
+    private String operandOne = ""; //First operand in add,sub, div, or mult problem
 
-    private double operandOne = 0; //First operand in add,sub, div, or mult problem
+    private String operandTwo = ""; //Second operand in add, sub, div, or mult problem
 
-    private double operandTwo = 0; //Second operand in add, sub, div, or mult problem
+    private double result = 0; //Arithmetic result from performing an operation
 
-    private int operationIndicator = 0; //tells equals method which operation to perform
+    private int operationFlag = 0; //indicates which operation to perform
 
-    private CalculatorDisplay display; //holder for passed display object declared in Calculator class
+    private CalculatorDisplay display; //holder for passed display object declared in CalculatorButtons class
 
 
-    public CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
+    CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
         this.display = display;
     }
 
-    public int getOperationIndicator() {
-        return operationIndicator;
+    int getOperationIndicator() {
+        return operationFlag;
     }
 
     void add() {
-        operationIndicator = 1;
-        displayValue += " + ";
-        display.setDisplay(displayValue);
-        displayValue = "";
+        operationFlag = 1;
+        display.setDisplay(display.getDisplay() + " + ");
+
     }
 
     void subtract() {
+        operationFlag = 2;
+        display.setDisplay(display.getDisplay() + " - ");
 
     }
 
     void multiply() {
+        operationFlag = 3;
+        display.setDisplay(display.getDisplay() + " * ");
 
     }
 
     void divide() {
+        operationFlag = 4;
+        display.setDisplay(display.getDisplay() + " / ");
 
     }
 
     void equal(int num) {
-
-        switch(num) {
-
-            case 0: break;
-
-            case 1:
-                operandOne = operandOne + operandTwo; //store result in operandOne
-                operandTwo = 0; //clear operandTwo
-
-                //will remove trailing zero if there is one
-                if (operandOne % Math.floor(operandOne) == 0) {
-                    int x = (int)operandOne;
-                    displayValue = Integer.toString(x);
-                    display.setDisplay(displayValue);
+        switch (operationFlag) {
+            case 1: result = Double.parseDouble(operandOne) + Double.parseDouble(operandTwo);
+                    display.setDisplay(Double.toString(result));
                     break;
-                }
-                else {
-                    displayValue = Double.toString(operandOne);
-                    display.setDisplay(displayValue);
+
+            case 2: result = Double.parseDouble(operandOne) - Double.parseDouble(operandTwo);
+                    display.setDisplay(Double.toString(result));
                     break;
-                }
 
-            case 2:
+            case 3: result = Double.parseDouble(operandOne) * Double.parseDouble(operandTwo);
+                    display.setDisplay(Double.toString(result));
+                    break;
 
-                break;
+            case 4: result = Double.parseDouble(operandOne) / Double.parseDouble(operandTwo);
+                    display.setDisplay(Double.toString(result));
+                    break;
 
-            case 3:
+            default: break;
 
-                break;
-
-            case 4:
-
-                break;
         }
     }
 
     void clearEntry() {
-        operationIndicator = 0;
-        displayValue = "";
+        operationFlag = 0;
         display.setDisplay("0");
+
     }
 
     void clear() {
-        operandOne = 0;
-        operandTwo = 0;
-        operationIndicator = 0;
-        displayValue = "";
+        operandOne = "0";
+        operandTwo = "0";
+        operationFlag = 0;
         display.setDisplay("0");
+
     }
 
     void number(String s) {
-        displayValue += s;
-        display.setDisplay(displayValue);
+        if (operationFlag == 0) { //checks which operand to fill
 
-        if (operationIndicator != 0) {
-            operandOne = Double.parseDouble(displayValue);
+            if (display.getDisplay().equals("0")) { //will prevent the starting zero from being attached to the number
+                display.setDisplay(s);
+                operandOne += display.getDisplay();
+
+            } else {
+                display.setDisplay(display.getDisplay() + s);
+                operandOne += display.getDisplay();
+
+            }
+
+        } else {
+            operandTwo += s;
+            display.setDisplay(display.getDisplay() + s);
+
         }
-        else {
-            operandTwo = Double.parseDouble(displayValue);
-        }
+
     }
 }

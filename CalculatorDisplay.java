@@ -21,7 +21,11 @@ class CalculatorDisplay extends HBox{
         this.getChildren().add(display);
     }
 
-    public void setDisplay(String s) {
+    void setDisplay(String s) {
         display.setText(s);
+    }
+
+    String getDisplay() {
+        return display.getText();
     }
 }

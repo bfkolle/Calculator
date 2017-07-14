@@ -12,7 +12,8 @@ import javafx.scene.Scene;
 public class Calculator extends Application {
 
     private VBox container = new VBox();
-    private CalculatorButtons buttons = new CalculatorButtons(); //object to manage calculator buttons
+
+    private CalculatorButtons buttons = new CalculatorButtons();
 
     @Override
     public void start(Stage primaryStage) {

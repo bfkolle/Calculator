@@ -14,8 +14,7 @@ class CalculatorButtons extends VBox {
 
     private CalculatorActions actions;
 
-    //Create row for display
-    CalculatorDisplay display = new CalculatorDisplay();
+    private CalculatorDisplay display = new CalculatorDisplay();
 
     CalculatorButtons() {
 
@@ -67,7 +66,7 @@ class CalculatorButtons extends VBox {
 
         this.getChildren().addAll(display, row1, row2, row3, row4, row5);
 
-        //Assign lambda event handler to each button
+        //Assign lambda event handlers to each button
         btCE.setOnAction(e -> actions.clearEntry());
 
         btC.setOnAction(e -> actions.clear());
