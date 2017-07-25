@@ -4,9 +4,9 @@
 
 class CalculatorActions {
 
-    private String operandOne = ""; //First operand in add,sub, div, or mult problem
+    private double operandOne; //First operand in add,sub, div, or mult problem
 
-    private String operandTwo = ""; //Second operand in add, sub, div, or mult problem
+    private double operandTwo; //Second operand in add, sub, div, or mult problem
 
     private double result = 0; //Arithmetic result from performing an operation
 
@@ -17,10 +17,6 @@ class CalculatorActions {
 
     CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
         this.display = display;
-    }
-
-    int getOperationIndicator() {
-        return operationFlag;
     }
 
     void add() {
@@ -47,25 +43,31 @@ class CalculatorActions {
 
     }
 
-    void equal(int num) {
+    void equal() {
         switch (operationFlag) {
-            case 1: result = Double.parseDouble(operandOne) + Double.parseDouble(operandTwo);
+            case 1: result = operandOne + operandTwo;
                     display.setDisplay(Double.toString(result));
+                    operationFlag = 0;
                     break;
 
-            case 2: result = Double.parseDouble(operandOne) - Double.parseDouble(operandTwo);
+            case 2: result = operandOne - operandTwo;
                     display.setDisplay(Double.toString(result));
+                    operationFlag = 0;
                     break;
 
-            case 3: result = Double.parseDouble(operandOne) * Double.parseDouble(operandTwo);
+            case 3: result = operandOne * operandTwo;
                     display.setDisplay(Double.toString(result));
+                    operationFlag = 0;
                     break;
 
-            case 4: result = Double.parseDouble(operandOne) / Double.parseDouble(operandTwo);
+            case 4: result = operandOne / operandTwo;
                     display.setDisplay(Double.toString(result));
+                    operationFlag = 0;
                     break;
 
-            default: break;
+            default:
+                    operationFlag = 0;
+                    break;
 
         }
     }
@@ -77,8 +79,8 @@ class CalculatorActions {
     }
 
     void clear() {
-        operandOne = "0";
-        operandTwo = "0";
+        operandOne = 0;
+        operandTwo = 0;
         operationFlag = 0;
         display.setDisplay("0");
 
@@ -89,17 +91,28 @@ class CalculatorActions {
 
             if (display.getDisplay().equals("0")) { //will prevent the starting zero from being attached to the number
                 display.setDisplay(s);
-                operandOne += display.getDisplay();
+                operandOne = Double.parseDouble(display.getDisplay());
 
             } else {
                 display.setDisplay(display.getDisplay() + s);
-                operandOne += display.getDisplay();
+                operandOne = Double.parseDouble(display.getDisplay());
 
             }
 
         } else {
-            operandTwo += s;
             display.setDisplay(display.getDisplay() + s);
+
+            if(operandTwo == 0) {
+                operandTwo = Double.parseDouble(s);
+
+            } else {
+                String temp = Integer.toString((int)operandTwo);
+
+                temp += s;
+
+                operandTwo = Double.parseDouble(temp);
+
+            }
 
         }
 

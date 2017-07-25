@@ -79,7 +79,7 @@ class CalculatorButtons extends VBox {
 
         btAdd.setOnAction(e -> actions.add());
 
-        btEquals.setOnAction(e -> actions.equal(actions.getOperationIndicator()));
+        btEquals.setOnAction(e -> actions.equal());
 
         bt9.setOnAction(e -> actions.number("9"));
 
