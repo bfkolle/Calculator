@@ -10,15 +10,13 @@ class CalculatorActions {
 
     private double result = 0; //Arithmetic result from performing an operation
 
-    private String operationIndicator = ""; //indicates which operation to perform
+    private String operationIndicator = ""; //Indicates which operation to perform
 
-    private boolean resultFlag = false; //indicates whether an operation has previously been committed
+    private boolean resultFlag = false; //Indicates whether an operation has previously been committed
 
-    private boolean operandOneFlag = false; //operand one is currently being filled
+    private boolean operandOneFlag = false; //Operand one is currently being filled
 
-    private boolean operandTwoFlag = false; //operand two is currently being filled
-
-    private CalculatorDisplay display; //holder for passed display object declared in CalculatorButtons class
+    private CalculatorDisplay display;
 
 
     CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
@@ -58,8 +56,7 @@ class CalculatorActions {
         if (operandOneFlag) {
             operandOne = operandOne * -1.0;
         }
-
-        else if (operandTwoFlag) {
+        else if (!operandOneFlag) {
             operandTwo = operandTwo * -1.0;
         }
     }
@@ -110,36 +107,60 @@ class CalculatorActions {
         result = 0;
         resultFlag = false;
         operationIndicator = "";
-        display.setDisplay("0");
+        display.setDisplay("");
 
     }
 
     void number(String s) {
-        if (operationIndicator.equals("")) { //First operand
+        //First operand
+        if (operationIndicator.equals("")) {
             operandOneFlag = true;
-            operandTwoFlag = false;
 
-            if (display.getDisplay().equals("0") || resultFlag) {
-                display.setDisplay(s);
-                operandOne = Double.parseDouble(display.getDisplay());
+            if (resultFlag) {
+                operandOne = Double.parseDouble(s);
+                display.setDisplay(Double.toString(operandOne));
                 resultFlag = false;
 
-            } else {
-                display.setDisplay(display.getDisplay() + s);
-                operandOne = Double.parseDouble(display.getDisplay());
+            }
+            else {
+                if (operandOne % 1.0 == 0) {
+                    String temp = Integer.toString((int)operandOne);
+                    temp += s;
+                    operandOne = Double.parseDouble(temp);
+                    display.setDisplay(Double.toString(operandOne));
+                }
+                else {
+                    String temp = Double.toString(operandOne);
+                    temp += s;
+                    operandOne = Double.parseDouble(temp);
+                    display.setDisplay(Double.toString(operandOne));
+                }
 
             }
 
-        } else { //Second operand
+        }
+        //Second operand
+        else {
             operandOneFlag = false;
-            operandTwoFlag = true;
 
-            display.setDisplay(display.getDisplay() + s);
+            if (operandTwo % 1.0 == 0) {
+                String temp = Integer.toString((int)operandTwo);
+                temp += s;
+                operandTwo = Double.parseDouble(temp);
+                display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
+            }
+            else {
+                String temp = Double.toString(operandTwo);
+                temp += s;
+                operandTwo = Double.parseDouble(temp);
+                display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
+            }
 
-            String temp = Integer.toString((int)operandTwo);
-            temp += s;
 
-            operandTwo = Double.parseDouble(temp);
+
+
+
+
 
         }
 

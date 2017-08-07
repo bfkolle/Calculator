@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 class CalculatorDisplay extends HBox{
 
-    private Text display = new Text("0");
+    private Text display = new Text("");
 
     CalculatorDisplay() {
 
