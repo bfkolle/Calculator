@@ -12,7 +12,7 @@ import java.util.Collections;
 
 class CalculatorButtons extends VBox {
 
-    CalculatorDisplay display = new CalculatorDisplay();
+    private CalculatorDisplay display = new CalculatorDisplay();
 
     private CalculatorActions actions = new CalculatorActions(display);
 

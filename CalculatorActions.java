@@ -10,7 +10,7 @@ class CalculatorActions {
 
     private double result = 0; //Arithmetic result from performing an operation
 
-    private int operationIndicator = 0; //indicates which operation to perform
+    private String operationIndicator = ""; //indicates which operation to perform
 
     private boolean resultFlag = false; //indicates whether an operation has previously been committed
 
@@ -27,29 +27,29 @@ class CalculatorActions {
 
     void add() {
         if (!resultFlag) {
-            operationIndicator = 1;
-            display.setDisplay(display.getDisplay() + " + ");
+            operationIndicator = "+";
+            display.setDisplay(display.getDisplay() + "+");
         }
     }
 
     void subtract() {
         if (!resultFlag) {
-            operationIndicator = 2;
-            display.setDisplay(display.getDisplay() + " - ");
+            operationIndicator = "-";
+            display.setDisplay(display.getDisplay() + "-");
         }
     }
 
     void multiply() {
         if (!resultFlag) {
-            operationIndicator = 3;
-            display.setDisplay(display.getDisplay() + " * ");
+            operationIndicator = "*";
+            display.setDisplay(display.getDisplay() + "*");
         }
     }
 
     void divide() {
         if (!resultFlag) {
-            operationIndicator = 4;
-            display.setDisplay(display.getDisplay() + " / ");
+            operationIndicator = "*";
+            display.setDisplay(display.getDisplay() + "/");
         }
 
     }
@@ -67,37 +67,33 @@ class CalculatorActions {
     void equals() {
         switch (operationIndicator) {
 
-            //Addition
-            case 1: result = operandOne + operandTwo;
+            case "+": result = operandOne + operandTwo;
                     display.setDisplay(Double.toString(result));
-                    operationIndicator = 0;
+                    operationIndicator = "";
                     operandOne = 0;
                     operandTwo = 0;
                     resultFlag = true;
                     break;
 
-            //Subtraction
-            case 2: result = operandOne - operandTwo;
+            case "-": result = operandOne - operandTwo;
                     display.setDisplay(Double.toString(result));
-                    operationIndicator = 0;
+                    operationIndicator = "";
                     operandOne = 0;
                     operandTwo = 0;
                     resultFlag = true;
                     break;
 
-            //Multiplication
-            case 3: result = operandOne * operandTwo;
+            case "*": result = operandOne * operandTwo;
                     display.setDisplay(Double.toString(result));
-                    operationIndicator = 0;
+                    operationIndicator = "";
                     operandOne = 0;
                     operandTwo = 0;
                     resultFlag = true;
                     break;
 
-            //Division
-            case 4: result = operandOne / operandTwo;
+            case "/": result = operandOne / operandTwo;
                     display.setDisplay(Double.toString(result));
-                    operationIndicator = 0;
+                    operationIndicator = "";
                     operandOne = 0;
                     operandTwo = 0;
                     resultFlag = true;
@@ -113,17 +109,17 @@ class CalculatorActions {
         operandTwo = 0;
         result = 0;
         resultFlag = false;
-        operationIndicator = 0;
+        operationIndicator = "";
         display.setDisplay("0");
 
     }
 
     void number(String s) {
-        if (operationIndicator == 0) { //First operand
+        if (operationIndicator.equals("")) { //First operand
             operandOneFlag = true;
             operandTwoFlag = false;
 
-            if (display.getDisplay().equals("0") || resultFlag) { //Prevent existing text from being attached to the number
+            if (display.getDisplay().equals("0") || resultFlag) {
                 display.setDisplay(s);
                 operandOne = Double.parseDouble(display.getDisplay());
                 resultFlag = false;
