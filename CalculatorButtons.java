@@ -7,21 +7,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by bfkol on 7/7/2017.
+ * Created by bfkolle on 7/7/2017.
  */
 
 class CalculatorButtons extends VBox {
 
-    private CalculatorActions actions;
+    CalculatorDisplay display = new CalculatorDisplay();
 
-    private CalculatorDisplay display = new CalculatorDisplay();
+    private CalculatorActions actions = new CalculatorActions(display);
+
 
     CalculatorButtons() {
 
-        //Create object for button actions
-        actions = new CalculatorActions(display);
-
-        //ArrayList to hold all of the buttons
         ArrayList<Button> buttonHolder = new ArrayList<>();
 
         //Declare each button of calculator
@@ -33,7 +30,6 @@ class CalculatorButtons extends VBox {
                 btAdd = new Button("+"), btNeg = new Button("Neg"), bt0 = new Button("0"),
                 btDec = new Button("."), btEquals = new Button("=");
 
-        //Add all buttons to buttonHolder arrayList
         Collections.addAll(buttonHolder, btCE, btC, btBack, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
                 bt2, bt3, btAdd, btNeg, bt0, btDec, btEquals);
 
@@ -67,8 +63,6 @@ class CalculatorButtons extends VBox {
         this.getChildren().addAll(display, row1, row2, row3, row4, row5);
 
         //Assign lambda event handlers to each button
-        btCE.setOnAction(e -> actions.clearEntry());
-
         btC.setOnAction(e -> actions.clear());
 
         btDiv.setOnAction(e -> actions.divide());
@@ -79,7 +73,7 @@ class CalculatorButtons extends VBox {
 
         btAdd.setOnAction(e -> actions.add());
 
-        btEquals.setOnAction(e -> actions.equal());
+        btEquals.setOnAction(e -> actions.equals());
 
         bt9.setOnAction(e -> actions.number("9"));
 
@@ -102,6 +96,8 @@ class CalculatorButtons extends VBox {
         bt0.setOnAction(e -> actions.number("0"));
 
         btDec.setOnAction(e -> actions.number("."));
+
+        btNeg.setOnAction(e -> actions.negative());
 
     }
 }
