@@ -23,6 +23,8 @@ class CalculatorActions {
         this.display = display;
     }
 
+    /*Event Actions*********************
+    ************************************/
     void add() {
         if (!resultFlag) {
             operationIndicator = "+";
@@ -46,7 +48,7 @@ class CalculatorActions {
 
     void divide() {
         if (!resultFlag) {
-            operationIndicator = "*";
+            operationIndicator = "/";
             display.setDisplay(display.getDisplay() + "/");
         }
 
@@ -123,18 +125,8 @@ class CalculatorActions {
 
             }
             else {
-                if (operandOne % 1.0 == 0) {
-                    String temp = Integer.toString((int)operandOne);
-                    temp += s;
-                    operandOne = Double.parseDouble(temp);
-                    display.setDisplay(Double.toString(operandOne));
-                }
-                else {
-                    String temp = Double.toString(operandOne);
-                    temp += s;
-                    operandOne = Double.parseDouble(temp);
-                    display.setDisplay(Double.toString(operandOne));
-                }
+                operandOne = this.appendInput(s, operandOne);
+                display.setDisplay(Double.toString(operandOne));
 
             }
 
@@ -142,27 +134,31 @@ class CalculatorActions {
         //Second operand
         else {
             operandOneFlag = false;
-
-            if (operandTwo % 1.0 == 0) {
-                String temp = Integer.toString((int)operandTwo);
-                temp += s;
-                operandTwo = Double.parseDouble(temp);
-                display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
-            }
-            else {
-                String temp = Double.toString(operandTwo);
-                temp += s;
-                operandTwo = Double.parseDouble(temp);
-                display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
-            }
-
-
-
-
-
-
+            operandTwo = this.appendInput(s,operandTwo);
+            display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
 
         }
+    }
+    /*End Event Actions ******************
+    **************************************/
+
+    //Appends passed string to passed double
+    private double appendInput(String s, double operand) {
+        double returnOperand;
+
+        if (operand % 1.0 == 0) {
+            String temp = Integer.toString((int)operand);
+            temp += s;
+            returnOperand= Double.parseDouble(temp);
+
+        }
+        else {
+            String temp = Double.toString(operand);
+            temp += s;
+            returnOperand = Double.parseDouble(temp);
+
+        }
+        return returnOperand;
 
     }
 }
