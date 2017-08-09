@@ -57,9 +57,11 @@ class CalculatorActions {
     void negative() {
         if (operandOneFlag) {
             operandOne = operandOne * -1.0;
+            display.setDisplay(Double.toString(operandOne));
         }
         else if (!operandOneFlag) {
             operandTwo = operandTwo * -1.0;
+            display.setDisplay(Double.toString(operandOne) + operationIndicator + Double.toString(operandTwo));
         }
     }
 
@@ -135,7 +137,7 @@ class CalculatorActions {
         else {
             operandOneFlag = false;
             operandTwo = this.appendInput(s,operandTwo);
-            display.setDisplay(Double.toString(operandOne) + operationIndicator + operandTwo);
+            display.setDisplay(Double.toString(operandOne) + operationIndicator + Double.toString(operandTwo));
 
         }
     }
