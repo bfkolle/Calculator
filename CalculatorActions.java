@@ -14,8 +14,6 @@ class CalculatorActions {
 
     private boolean resultFlag = false; //Indicates whether an operation has previously been committed
 
-    private boolean operandOneFlag = false; //Operand one is currently being filled
-
     private CalculatorDisplay display;
 
 
@@ -27,7 +25,6 @@ class CalculatorActions {
     ************************************/
 
     void setOperator(String s) {
-        operandOneFlag = false;
         operationIndicator = s;
 
         if (resultFlag) {
@@ -43,13 +40,20 @@ class CalculatorActions {
     }
 
     void negative() {
-        if (operandOneFlag) {
+        if (operationIndicator == "") {
             operandOne = operandOne * -1.0;
             display.setDisplay(Double.toString(operandOne));
+
         }
-        else if (!operandOneFlag) {
+        else if (!resultFlag){
             operandTwo = operandTwo * -1.0;
-            display.setDisplay(Double.toString(operandOne) + operationIndicator + Double.toString(operandTwo));
+            display.setDisplay(operandOne, operationIndicator, operandTwo);
+
+        }
+        else {
+            operandTwo = operandTwo * -1.0;
+            display.setDisplay(operationIndicator, operandTwo);
+
         }
     }
 
@@ -106,8 +110,6 @@ class CalculatorActions {
     void number(String s) {
         //First operand
         if (operationIndicator.equals("")) {
-            operandOneFlag = true;
-
             if (resultFlag) {
                 operandOne = Double.parseDouble(s);
                 display.setDisplay(Double.toString(operandOne));
