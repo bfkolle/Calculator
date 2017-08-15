@@ -107,7 +107,7 @@ class CalculatorActions {
         result = 0;
         resultFlag = false;
         operationIndicator = "";
-        display.setDisplay("");
+        display.setDisplay("0");
 
     }
 
