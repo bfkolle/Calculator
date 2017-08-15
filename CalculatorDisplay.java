@@ -28,7 +28,13 @@ class CalculatorDisplay extends HBox{
     //Manually set display
     void setDisplay(String s) {
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 50));
-        display.setText(s);
+        if (isWholeNumber(Double.parseDouble(s))) {
+            display.setText(Integer.toString((int)Double.parseDouble(s)));
+        }
+        else {
+            display.setText(s);
+        }
+
         displaySecondary.setText("");
 
     }
@@ -36,10 +42,19 @@ class CalculatorDisplay extends HBox{
     //Set display according to 'operand operator operand' notation
     void setDisplay(double opOne, String operator, double opTwo) {
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 30));
-        display.setText(Double.toString(opOne) + " " + operator + "  ");
+
+        if (isWholeNumber(opOne)) {
+            display.setText(Integer.toString((int)opOne) + " " + operator + "  ");
+        }
+        else {
+            display.setText(Double.toString(opOne) + " " + operator + "  ");
+        }
 
         if (opTwo == 0) {
             displaySecondary.setText("");
+        }
+        else if (isWholeNumber(opTwo)){
+            displaySecondary.setText(Integer.toString((int)opTwo));
         }
         else {
             displaySecondary.setText(Double.toString(opTwo));
@@ -47,7 +62,7 @@ class CalculatorDisplay extends HBox{
 
     }
 
-    //Set display according to 'Answer operator operand' notation
+    //Set display according to 'answer operator operand' notation
     void setDisplay(String operator, double opTwo) {
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 30));
         display.setText("ANS" + " " + operator + "  ");
@@ -55,14 +70,23 @@ class CalculatorDisplay extends HBox{
         if (opTwo == 0) {
             displaySecondary.setText("");
         }
+        else if (isWholeNumber(opTwo)){
+            displaySecondary.setText(Integer.toString((int)opTwo));
+
+        }
         else {
             displaySecondary.setText(Double.toString(opTwo));
         }
     }
 
-    String getDisplay() {
-        return display.getText();
+    private boolean isWholeNumber(double num) {
+        boolean isWholeNumber = false;
 
+        if (num % 1.0 == 0) {
+            isWholeNumber = true;
+        }
+
+        return isWholeNumber;
     }
 
 }

@@ -14,6 +14,10 @@ class CalculatorActions {
 
     private boolean resultFlag = false; //Indicates whether an operation has previously been committed
 
+    private boolean decimalFlag = false; //Indicates whether a decimal is being appended to a number
+
+    private double tenPower = 1;//Power of ten to divide input when a decimal result is desired
+
     private CalculatorDisplay display;
 
 
@@ -40,7 +44,7 @@ class CalculatorActions {
     }
 
     void negative() {
-        if (operationIndicator == "") {
+        if (operationIndicator.equals("")) {
             operandOne = operandOne * -1.0;
             display.setDisplay(Double.toString(operandOne));
 
