@@ -16,8 +16,6 @@ class CalculatorActions {
 
     private boolean decimalFlag = false; //Indicates whether a decimal is being appended to a number
 
-    private double tenPower = 1;//Power of ten to divide input when a decimal result is desired
-
     private CalculatorDisplay display;
 
 
@@ -34,6 +32,7 @@ class CalculatorActions {
         if (resultFlag) {
             display.setDisplay(operationIndicator, operandTwo);
             operandOne = result;
+            resultFlag = false;
 
         }
         else {
@@ -44,14 +43,19 @@ class CalculatorActions {
     }
 
     void negative() {
-        if (operationIndicator.equals("")) {
+        if (operationIndicator.equals("") && !resultFlag) {
             operandOne = operandOne * -1.0;
             display.setDisplay(Double.toString(operandOne));
 
         }
-        else if (!resultFlag){
+        else if (!resultFlag) {
             operandTwo = operandTwo * -1.0;
             display.setDisplay(operandOne, operationIndicator, operandTwo);
+
+        }
+        else if (resultFlag) {
+            result = result * -1.0;
+            display.setDisplay(Double.toString(result));
 
         }
         else {

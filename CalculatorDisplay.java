@@ -28,6 +28,7 @@ class CalculatorDisplay extends HBox{
     //Manually set display
     void setDisplay(String s) {
         display.setFont(Font.font("sans serif", FontWeight.BOLD, 50));
+
         if (isWholeNumber(Double.parseDouble(s))) {
             display.setText(Integer.toString((int)Double.parseDouble(s)));
         }
