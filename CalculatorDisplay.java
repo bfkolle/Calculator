@@ -65,8 +65,4 @@ class CalculatorDisplay extends HBox{
 
     }
 
-    void setDisplayFontSize(int n) {
-        display.setFont(Font.font("sans serif", FontWeight.BOLD, n));
-
-    }
 }
