@@ -30,15 +30,12 @@ class CalculatorActions {
         operationIndicator = s;
 
         if (resultFlag) {
-            display.setDisplay(operationIndicator, operandTwo);
             operandOne = result;
             resultFlag = false;
 
         }
-        else {
-            display.setDisplay(operandOne, operationIndicator, operandTwo);
 
-        }
+        display.setDisplay(operandOne, operationIndicator, operandTwo);
 
     }
 
@@ -48,11 +45,7 @@ class CalculatorActions {
             display.setDisplay(Double.toString(operandOne));
 
         }
-        else if (!resultFlag) {
-            operandTwo = operandTwo * -1.0;
-            display.setDisplay(operandOne, operationIndicator, operandTwo);
 
-        }
         else if (resultFlag) {
             result = result * -1.0;
             display.setDisplay(Double.toString(result));
@@ -60,49 +53,10 @@ class CalculatorActions {
         }
         else {
             operandTwo = operandTwo * -1.0;
-            display.setDisplay(operationIndicator, operandTwo);
+            display.setDisplay(operandOne, operationIndicator, operandTwo);
 
         }
-    }
 
-    void equals() {
-        switch (operationIndicator) {
-
-            case "+": result = this.add(operandOne, operandTwo);
-                    display.setDisplay(Double.toString(result));
-                    operationIndicator = "";
-                    operandOne = 0;
-                    operandTwo = 0;
-                    resultFlag = true;
-                    break;
-
-            case "-": result = this.subtract(operandOne, operandTwo);
-                    display.setDisplay(Double.toString(result));
-                    operationIndicator = "";
-                    operandOne = 0;
-                    operandTwo = 0;
-                    resultFlag = true;
-                    break;
-
-            case "*": result = this.multiply(operandOne, operandTwo);
-                    display.setDisplay(Double.toString(result));
-                    operationIndicator = "";
-                    operandOne = 0;
-                    operandTwo = 0;
-                    resultFlag = true;
-                    break;
-
-            case "/": result = this.divide(operandOne, operandTwo);
-                    display.setDisplay(Double.toString(result));
-                    operationIndicator = "";
-                    operandOne = 0;
-                    operandTwo = 0;
-                    resultFlag = true;
-                    break;
-
-            default: break;
-
-        }
     }
 
     void clear() {
@@ -133,16 +87,48 @@ class CalculatorActions {
         }
         //Second operand
         else {
-            if (resultFlag) {
-                operandTwo = this.appendInput(s, operandTwo);
-                display.setDisplay(operationIndicator, operandTwo);
+            operandTwo = this.appendInput(s, operandTwo);
+            display.setDisplay(operandOne, operationIndicator, operandTwo);
 
-            }
-            else {
-                operandTwo = this.appendInput(s, operandTwo);
-                display.setDisplay(operandOne, operationIndicator, operandTwo);
+        }
+    }
 
-            }
+    void equals() {
+        switch (operationIndicator) {
+
+            case "+": result = this.add(operandOne, operandTwo);
+                display.setDisplay(Double.toString(result));
+                operationIndicator = "";
+                operandOne = 0;
+                operandTwo = 0;
+                resultFlag = true;
+                break;
+
+            case "-": result = this.subtract(operandOne, operandTwo);
+                display.setDisplay(Double.toString(result));
+                operationIndicator = "";
+                operandOne = 0;
+                operandTwo = 0;
+                resultFlag = true;
+                break;
+
+            case "*": result = this.multiply(operandOne, operandTwo);
+                display.setDisplay(Double.toString(result));
+                operationIndicator = "";
+                operandOne = 0;
+                operandTwo = 0;
+                resultFlag = true;
+                break;
+
+            case "/": result = this.divide(operandOne, operandTwo);
+                display.setDisplay(Double.toString(result));
+                operationIndicator = "";
+                operandOne = 0;
+                operandTwo = 0;
+                resultFlag = true;
+                break;
+
+            default: break;
 
         }
     }

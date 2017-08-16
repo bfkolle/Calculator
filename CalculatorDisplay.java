@@ -46,30 +46,16 @@ class CalculatorDisplay extends HBox{
 
         if (isWholeNumber(opOne)) {
             display.setText(Integer.toString((int)opOne) + " " + operator + "  ");
+
         }
         else {
             display.setText(Double.toString(opOne) + " " + operator + "  ");
+
         }
 
         if (opTwo == 0) {
             displaySecondary.setText("");
-        }
-        else if (isWholeNumber(opTwo)){
-            displaySecondary.setText(Integer.toString((int)opTwo));
-        }
-        else {
-            displaySecondary.setText(Double.toString(opTwo));
-        }
 
-    }
-
-    //Set display according to 'answer operator operand' notation
-    void setDisplay(String operator, double opTwo) {
-        display.setFont(Font.font("sans serif", FontWeight.BOLD, 30));
-        display.setText("ANS" + " " + operator + "  ");
-
-        if (opTwo == 0) {
-            displaySecondary.setText("");
         }
         else if (isWholeNumber(opTwo)){
             displaySecondary.setText(Integer.toString((int)opTwo));
@@ -77,7 +63,9 @@ class CalculatorDisplay extends HBox{
         }
         else {
             displaySecondary.setText(Double.toString(opTwo));
+
         }
+
     }
 
     private boolean isWholeNumber(double num) {
