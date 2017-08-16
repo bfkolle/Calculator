@@ -25,6 +25,8 @@ public class Calculator extends Application {
 
         Scene scene = new Scene(container, 450, 450);
 
+        primaryStage.setMinHeight(475);
+        primaryStage.setMinWidth(475);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calculator");
         primaryStage.show();

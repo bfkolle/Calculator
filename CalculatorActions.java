@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+
 /**
  * Created by bfkol on 7/9/2017.
  */
@@ -18,6 +20,8 @@ class CalculatorActions {
 
     private boolean operandFlag = false; //False = operandOne, True = operandTwo
 
+    private int powerOfTen = 1;
+
     private CalculatorDisplay display;
 
 
@@ -30,6 +34,9 @@ class CalculatorActions {
 
     void setOperator(String s) {
         operationIndicator = s;
+        operandFlag = true;
+        decimalFlag = false;
+        powerOfTen = 1;
 
         if (resultFlag) {
             operandOne = result;
@@ -41,18 +48,19 @@ class CalculatorActions {
 
     }
 
-    void number(String s) {
+    void numberInput(String s) {
         //First operand
-        if (operationIndicator.equals("")) {
-            operandFlag = false;
+        if (!operandFlag) {
 
             if (resultFlag) {
+                this.increasePowerOfTen();
                 operandOne = Double.parseDouble(s);
                 display.setDisplay(Double.toString(operandOne));
                 resultFlag = false;
 
             }
             else {
+                this.increasePowerOfTen();
                 operandOne = this.appendInput(s, operandOne);
                 display.setDisplay(Double.toString(operandOne));
 
@@ -61,6 +69,7 @@ class CalculatorActions {
         }
         //Second operand
         else {
+            this.increasePowerOfTen();
             operandFlag = true;
             operandTwo = this.appendInput(s, operandTwo);
             display.setDisplay(operandOne, operationIndicator, operandTwo);
@@ -73,34 +82,22 @@ class CalculatorActions {
 
             case "+": result = this.add(operandOne, operandTwo);
                 display.setDisplay(Double.toString(result));
-                operationIndicator = "";
-                operandOne = 0;
-                operandTwo = 0;
-                resultFlag = true;
+                this.reset();
                 break;
 
             case "-": result = this.subtract(operandOne, operandTwo);
                 display.setDisplay(Double.toString(result));
-                operationIndicator = "";
-                operandOne = 0;
-                operandTwo = 0;
-                resultFlag = true;
+                this.reset();
                 break;
 
             case "*": result = this.multiply(operandOne, operandTwo);
                 display.setDisplay(Double.toString(result));
-                operationIndicator = "";
-                operandOne = 0;
-                operandTwo = 0;
-                resultFlag = true;
+                this.reset();
                 break;
 
             case "/": result = this.divide(operandOne, operandTwo);
                 display.setDisplay(Double.toString(result));
-                operationIndicator = "";
-                operandOne = 0;
-                operandTwo = 0;
-                resultFlag = true;
+                this.reset();
                 break;
 
             default: break;
@@ -109,7 +106,7 @@ class CalculatorActions {
     }
 
     void negative() {
-        if (operationIndicator.equals("") && !resultFlag) {
+        if (!operandFlag && !resultFlag) {
             operandOne = operandOne * -1.0;
             display.setDisplay(Double.toString(operandOne));
 
@@ -134,6 +131,8 @@ class CalculatorActions {
         result = 0;
         resultFlag = false;
         operandFlag = false;
+        decimalFlag = false;
+        powerOfTen = 1;
         operationIndicator = "";
         display.setDisplay("0");
 
@@ -143,6 +142,8 @@ class CalculatorActions {
         operandOne = result;
         operandTwo = 0;
         operandFlag = false;
+        decimalFlag = false;
+        powerOfTen = 1;
         operationIndicator = "";
         display.setDisplay("0");
 
@@ -166,6 +167,10 @@ class CalculatorActions {
         }
     }
 
+    void decimal() {
+        decimalFlag = true;
+    }
+
     /*End Event Actions ******************
     **************************************/
 
@@ -174,15 +179,29 @@ class CalculatorActions {
         double returnOperand;
 
         if (operand % 1.0 == 0) {
-            String temp = Integer.toString((int)operand);
-            temp += s;
-            returnOperand= Double.parseDouble(temp);
+            if (decimalFlag) {
+                returnOperand = getExactDecimal(s, operand);
+
+            }
+            else {
+                String temp = Integer.toString((int)operand);
+                temp += s;
+                returnOperand= Double.parseDouble(temp);
+
+            }
 
         }
         else {
-            String temp = Double.toString(operand);
-            temp += s;
-            returnOperand = Double.parseDouble(temp);
+            if (decimalFlag) {
+                returnOperand = getExactDecimal(s, operand);
+
+            }
+            else {
+                String temp = Double.toString(operand);
+                temp += s;
+                returnOperand = Double.parseDouble(temp);
+
+            }
 
         }
         return returnOperand;
@@ -206,6 +225,37 @@ class CalculatorActions {
 
     private double divide(double opOne, double opTwo) {
         return opOne / opTwo;
+
+    }
+
+    private void reset() {
+        operationIndicator = "";
+        operandOne = 0;
+        operandTwo = 0;
+        resultFlag = true;
+        operandFlag = false;
+        decimalFlag = false;
+        powerOfTen = 1;
+
+    }
+
+    private void increasePowerOfTen() {
+        if (decimalFlag) {
+            powerOfTen *= 10;
+
+        }
+
+    }
+
+    private double getExactDecimal(String s, double operand) {
+        s = Double.toString(Double.parseDouble(s) / powerOfTen);
+        BigDecimal operandDec = new BigDecimal(Double.toString(operand));
+        BigDecimal sDec = new BigDecimal(s);
+
+        sDec = sDec.setScale(operandDec.scale() + 1, BigDecimal.ROUND_HALF_EVEN);
+        sDec = sDec.add(operandDec);
+
+        return sDec.doubleValue();
 
     }
 

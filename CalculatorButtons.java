@@ -79,27 +79,27 @@ class CalculatorButtons extends VBox {
 
         btEquals.setOnAction(e -> actions.equals());
 
-        bt9.setOnAction(e -> actions.number("9"));
+        bt9.setOnAction(e -> actions.numberInput("9"));
 
-        bt8.setOnAction(e -> actions.number("8"));
+        bt8.setOnAction(e -> actions.numberInput("8"));
 
-        bt7.setOnAction(e -> actions.number("7"));
+        bt7.setOnAction(e -> actions.numberInput("7"));
 
-        bt6.setOnAction(e -> actions.number("6"));
+        bt6.setOnAction(e -> actions.numberInput("6"));
 
-        bt5.setOnAction(e -> actions.number("5"));
+        bt5.setOnAction(e -> actions.numberInput("5"));
 
-        bt4.setOnAction(e -> actions.number("4"));
+        bt4.setOnAction(e -> actions.numberInput("4"));
 
-        bt3.setOnAction(e -> actions.number("3"));
+        bt3.setOnAction(e -> actions.numberInput("3"));
 
-        bt2.setOnAction(e -> actions.number("2"));
+        bt2.setOnAction(e -> actions.numberInput("2"));
 
-        bt1.setOnAction(e -> actions.number("1"));
+        bt1.setOnAction(e -> actions.numberInput("1"));
 
-        bt0.setOnAction(e -> actions.number("0"));
+        bt0.setOnAction(e -> actions.numberInput("0"));
 
-        btDec.setOnAction(e -> actions.number("."));
+        btDec.setOnAction(e -> actions.decimal());
 
         btNeg.setOnAction(e -> actions.negative());
 
