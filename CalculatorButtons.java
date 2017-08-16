@@ -65,6 +65,10 @@ class CalculatorButtons extends VBox {
         //Assign lambda event handlers to each button
         btC.setOnAction(e -> actions.clear());
 
+        btCE.setOnAction(e -> actions.clearEntry());
+
+        btBack.setOnAction(e -> actions.backspace());
+
         btDiv.setOnAction(e -> actions.setOperator("/"));
 
         btMult.setOnAction(e -> actions.setOperator("*"));

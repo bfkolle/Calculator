@@ -16,6 +16,8 @@ class CalculatorActions {
 
     private boolean decimalFlag = false; //Indicates whether a decimal is being appended to a number
 
+    private boolean operandFlag = false; //False = operandOne, True = operandTwo
+
     private CalculatorDisplay display;
 
 
@@ -39,39 +41,11 @@ class CalculatorActions {
 
     }
 
-    void negative() {
-        if (operationIndicator.equals("") && !resultFlag) {
-            operandOne = operandOne * -1.0;
-            display.setDisplay(Double.toString(operandOne));
-
-        }
-
-        else if (resultFlag) {
-            result = result * -1.0;
-            display.setDisplay(Double.toString(result));
-
-        }
-        else {
-            operandTwo = operandTwo * -1.0;
-            display.setDisplay(operandOne, operationIndicator, operandTwo);
-
-        }
-
-    }
-
-    void clear() {
-        operandOne = 0;
-        operandTwo = 0;
-        result = 0;
-        resultFlag = false;
-        operationIndicator = "";
-        display.setDisplay("0");
-
-    }
-
     void number(String s) {
         //First operand
         if (operationIndicator.equals("")) {
+            operandFlag = false;
+
             if (resultFlag) {
                 operandOne = Double.parseDouble(s);
                 display.setDisplay(Double.toString(operandOne));
@@ -87,6 +61,7 @@ class CalculatorActions {
         }
         //Second operand
         else {
+            operandFlag = true;
             operandTwo = this.appendInput(s, operandTwo);
             display.setDisplay(operandOne, operationIndicator, operandTwo);
 
@@ -132,6 +107,65 @@ class CalculatorActions {
 
         }
     }
+
+    void negative() {
+        if (operationIndicator.equals("") && !resultFlag) {
+            operandOne = operandOne * -1.0;
+            display.setDisplay(Double.toString(operandOne));
+
+        }
+
+        else if (resultFlag) {
+            result = result * -1.0;
+            display.setDisplay(Double.toString(result));
+
+        }
+        else {
+            operandTwo = operandTwo * -1.0;
+            display.setDisplay(operandOne, operationIndicator, operandTwo);
+
+        }
+
+    }
+
+    void clear() {
+        operandOne = 0;
+        operandTwo = 0;
+        result = 0;
+        resultFlag = false;
+        operandFlag = false;
+        operationIndicator = "";
+        display.setDisplay("0");
+
+    }
+
+    void clearEntry() {
+        operandOne = result;
+        operandTwo = 0;
+        operandFlag = false;
+        operationIndicator = "";
+        display.setDisplay("0");
+
+    }
+
+    void backspace() {
+        if (!operandFlag && operationIndicator.equals("")) {
+            display.setDisplay("0");
+            operandOne = 0;
+
+        }
+        else if (!operandFlag && !operationIndicator.equals("")) {
+            display.setDisplay(Double.toString(operandOne));
+            operationIndicator = "";
+
+        }
+        else {
+            operandTwo = 0;
+            display.setDisplay(operandOne, operationIndicator, operandTwo);
+            operandFlag = false;
+        }
+    }
+
     /*End Event Actions ******************
     **************************************/
 
