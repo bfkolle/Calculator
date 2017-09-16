@@ -8,5 +8,5 @@ Bugs:
   
 To-do:
   1) Edit graphics to improve visual appeal.
-  2) Add public to a numer of methods that are mysteriously missing them, to improve consistency.
+  2) Add public to a number of methods that are mysteriously missing them, to improve consistency.
   3) Add more comments.
