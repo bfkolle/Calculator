@@ -4,35 +4,33 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 /**
- * Created by Brandon Kolle on 12/22/2016.
- * This is a calculator program using the public class main as the main class,
- * and the Calculator class for
+ * @author Brandon Kolle
+ * 12/22/2016
  */
 
-public class Calculator extends Application {
-
+public class Calculator extends Application
+{
     private VBox container = new VBox();
-
     private CalculatorButtons buttons = new CalculatorButtons();
 
     @Override
-    public void start(Stage primaryStage) {
-
+    public void start(Stage primaryStage)
+    {
         buttons.minWidthProperty().bind(container.widthProperty());
         buttons.minHeightProperty().bind(container.heightProperty());
-
         container.getChildren().add(buttons);
 
         Scene scene = new Scene(container, 450, 450);
 
-        primaryStage.setMinHeight(475);
-        primaryStage.setMinWidth(475);
+        primaryStage.setMinHeight(450);
+        primaryStage.setMinWidth(450);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calculator");
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Application.launch(args);
     }
 }

@@ -1,7 +1,8 @@
 import java.math.BigDecimal;
 
 /**
- * Created by bfkol on 7/9/2017.
+ * @author Brandon Kolle
+ * 7/9/2017
  */
 
 class CalculatorActions {
@@ -25,20 +26,24 @@ class CalculatorActions {
     private CalculatorDisplay display;
 
 
-    CalculatorActions(CalculatorDisplay display) { //constructor to retrieve display object
+    //Constructor to retrieve display object
+    CalculatorActions(CalculatorDisplay display)
+	{
         this.display = display;
     }
 
     /*Event Actions*********************
     ************************************/
 
-    void setOperator(String s) {
+    void setOperator(String s)
+	{
         operationIndicator = s;
         operandFlag = true;
         decimalFlag = false;
         powerOfTen = 1;
 
-        if (resultFlag) {
+        if (resultFlag)
+        {
             operandOne = result;
             resultFlag = false;
 
@@ -47,17 +52,21 @@ class CalculatorActions {
         display.setDisplay(operandOne, operationIndicator, operandTwo);
     }
 
-    void numberInput(String s) {
+    void numberInput(String s)
+	{
         //First operand
-        if (!operandFlag) {
-            if (resultFlag) {
+        if (!operandFlag)
+        {
+            if (resultFlag)
+            {
                 this.increasePowerOfTen();
                 operandOne = Double.parseDouble(s);
                 display.setDisplay(Double.toString(operandOne));
                 resultFlag = false;
 
             }
-            else {
+            else
+			{
                 this.increasePowerOfTen();
                 operandOne = this.appendInput(s, operandOne);
                 display.setDisplay(Double.toString(operandOne));
@@ -65,7 +74,8 @@ class CalculatorActions {
             }
         }
         //Second operand
-        else {
+        else
+		{
             this.increasePowerOfTen();
             operandFlag = true;
             operandTwo = this.appendInput(s, operandTwo);
@@ -74,8 +84,10 @@ class CalculatorActions {
         }
     }
 
-    void equals() {
-        switch (operationIndicator) {
+    void equals()
+	{
+        switch (operationIndicator)
+		{
 
             case "+": result = this.add(operandOne, operandTwo);
                 display.setDisplay(Double.toString(result));
@@ -106,28 +118,34 @@ class CalculatorActions {
         }
     }
 
-    void negative() {
-        if (!operandFlag && !resultFlag) {
+    void negative()
+	{
+        if (!operandFlag && !resultFlag)
+        {
             operandOne = operandOne * -1.0;
             display.setDisplay(Double.toString(operandOne));
         }
-        else if (resultFlag) {
+        else if (resultFlag)
+        {
             result = result * -1.0;
             display.setDisplay(Double.toString(result));
         }
-        else {
-            operandTwo = operandTwo * -1.0;
+        else
+		{
+        	operandTwo = operandTwo * -1.0;
             display.setDisplay(operandOne, operationIndicator, operandTwo);
         }
     }
 
-    void clear() {
+    void clear()
+	{
         this.reset();
         result = 0;
         display.setDisplay("0");
     }
 
-    void clearEntry() {
+    void clearEntry()
+	{
         operandOne = result;
         operandTwo = 0;
         operandFlag = false;
@@ -137,7 +155,8 @@ class CalculatorActions {
         display.setDisplay("0");
     }
 
-    void decimal() {
+    void decimal()
+	{
         decimalFlag = true;
     }
 
@@ -145,25 +164,32 @@ class CalculatorActions {
     **************************************/
 
     //Appends passed string to passed double
-    private double appendInput(String s, double operand) {
+    private double appendInput(String s, double operand)
+	{
         double returnOperand;
 
-        if (operand % 1.0 == 0) {
-            if (decimalFlag) {
+        if (operand % 1.0 == 0)
+        {
+            if (decimalFlag)
+            {
                 returnOperand = appendExactDecimal(s, operand);
             }
-            else {
+            else
+			{
                 String temp = Integer.toString((int)operand);
                 temp += s;
                 returnOperand= Double.parseDouble(temp);
             }
 
         }
-        else {
-            if (decimalFlag) {
+        else
+		{
+            if (decimalFlag)
+            {
                 returnOperand = appendExactDecimal(s, operand);
             }
-            else {
+            else
+			{
                 String temp = Double.toString(operand);
                 temp += s;
                 returnOperand = Double.parseDouble(temp);
@@ -174,7 +200,8 @@ class CalculatorActions {
         return returnOperand;
     }
 
-    private double appendExactDecimal(String s, double operand) {
+    private double appendExactDecimal(String s, double operand)
+	{
         s = Double.toString(Double.parseDouble(s) / powerOfTen);
         BigDecimal operandDec = new BigDecimal(Double.toString(operand));
         BigDecimal sDec = new BigDecimal(s);
@@ -185,7 +212,61 @@ class CalculatorActions {
         return sDec.doubleValue();
     }
 
-    private double exponent(double opOne, double opTwo) {
+	private double computeExactDecimal(double opOne, double opTwo)
+	{
+		double decOpOne = opOne - Math.floor(opOne);
+		double decOpTwo = opTwo - Math.floor(opTwo);
+
+		BigDecimal bigOpOne = new BigDecimal(Double.toString(opOne));
+		BigDecimal bigOpTwo = new BigDecimal(Double.toString(opTwo));
+
+		if (Double.toString(decOpOne).length() > Double.toString(decOpTwo).length())
+		{
+			if (operationIndicator.equals("*"))
+			{
+				bigOpOne = bigOpOne.multiply(bigOpTwo);
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
+
+			}
+			else if (operationIndicator.equals("/"))
+			{
+				bigOpOne = bigOpOne.divide(bigOpTwo);
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
+
+			}
+			else
+			{
+				bigOpOne = bigOpOne.pow(bigOpTwo.intValue());
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
+
+			}
+		}
+		else
+		{
+			if (operationIndicator.equals("*"))
+			{
+				bigOpOne = bigOpOne.multiply(bigOpTwo);
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
+
+			}
+			else if (operationIndicator.equals("/"))
+			{
+				bigOpOne = bigOpOne.divide(bigOpTwo);
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
+
+			}
+			else
+			{
+				bigOpOne = bigOpOne.pow(bigOpTwo.intValue());
+				bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
+			}
+		}
+
+		return bigOpOne.doubleValue();
+	}
+
+    private double exponent(double opOne, double opTwo)
+	{
         return this.computeExactDecimal(operandOne, operandTwo);
     }
 
@@ -205,51 +286,8 @@ class CalculatorActions {
         return computeExactDecimal(opOne, opTwo);
     }
 
-    private double computeExactDecimal(double opOne, double opTwo) {
-        double decOpOne = opOne - Math.floor(opOne);
-        double decOpTwo = opTwo - Math.floor(opTwo);
-
-        BigDecimal bigOpOne = new BigDecimal(Double.toString(opOne));
-        BigDecimal bigOpTwo = new BigDecimal(Double.toString(opTwo));
-
-        if (Double.toString(decOpOne).length() > Double.toString(decOpTwo).length()) {
-            if (operationIndicator.equals("*")) {
-                bigOpOne = bigOpOne.multiply(bigOpTwo);
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
-
-            }
-            else if (operationIndicator.equals("/")){
-                bigOpOne = bigOpOne.divide(bigOpTwo);
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
-
-            }
-            else {
-                bigOpOne = bigOpOne.pow(bigOpTwo.intValue());
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpOne).length(), BigDecimal.ROUND_HALF_EVEN);
-
-            }
-        }
-        else {
-            if (operationIndicator.equals("*")) {
-                bigOpOne = bigOpOne.multiply(bigOpTwo);
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
-
-            }
-            else if (operationIndicator.equals("/")){
-                bigOpOne = bigOpOne.divide(bigOpTwo);
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
-
-            }
-            else {
-                bigOpOne = bigOpOne.pow(bigOpTwo.intValue());
-                bigOpOne = bigOpOne.setScale(Double.toString(decOpTwo).length(), BigDecimal.ROUND_HALF_EVEN);
-            }
-        }
-
-        return bigOpOne.doubleValue();
-    }
-
-    private void reset() {
+    private void reset()
+	{
         operationIndicator = "";
         operandOne = 0;
         operandTwo = 0;
@@ -260,8 +298,10 @@ class CalculatorActions {
 
     }
 
-    private void increasePowerOfTen() {
-        if (decimalFlag) {
+    private void increasePowerOfTen()
+	{
+        if (decimalFlag)
+        {
             powerOfTen *= 10;
         }
 

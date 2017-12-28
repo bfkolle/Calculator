@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by bfkolle on 7/7/2017.
+ * @author Brandon Kolle
+ * 7/7/2017
  */
 
-class CalculatorButtons extends VBox {
+class CalculatorButtons extends VBox
+{
 
     private CalculatorDisplay display = new CalculatorDisplay();
-
     private CalculatorActions actions = new CalculatorActions(display);
 
-
-    CalculatorButtons() {
-
+    CalculatorButtons()
+    {
         ArrayList<Button> buttonHolder = new ArrayList<>();
 
         //Declare each button of calculator
@@ -34,7 +34,8 @@ class CalculatorButtons extends VBox {
                 bt2, bt3, btAdd, btNeg, bt0, btDec, btEquals);
 
         //Set each button so it will grow to fit space, and set to bold
-        for (int i = 0; i < buttonHolder.size(); i++) {
+        for (int i = 0; i < buttonHolder.size(); i++)
+        {
             buttonHolder.get(i).minWidthProperty().bind(this.widthProperty().divide(4.0));
             buttonHolder.get(i).minHeightProperty().bind(this.heightProperty().divide(6.0));
             buttonHolder.get(i).setFont(Font.font("sans serif", FontWeight.BOLD, 30 ));

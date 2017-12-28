@@ -5,7 +5,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
- * Created by bfkolle on 7/7/2017.
+ * @author Brandon Kolle
+ * 7/7/2017
  */
 
 class CalculatorDisplay extends HBox{
