@@ -1,108 +1,49 @@
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @author Brandon Kolle
- * 7/7/2017
+/*
+	Author: Brandon Kolle
+	7/29/2018
  */
 
-class CalculatorButtons extends VBox
+class CalculatorButtons extends GridPane
 {
+    private ArrayList<Button> buttonHolder;
+    private Button btCE, btC, btDel, btDiv, bt7, bt8, bt9, btMult,
+			bt4, bt5, bt6, btSub, bt1, bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve;
 
-    private CalculatorDisplay display = new CalculatorDisplay();
-    private CalculatorActions actions = new CalculatorActions(display);
-
-    CalculatorButtons()
+    public CalculatorButtons()
     {
-        ArrayList<Button> buttonHolder = new ArrayList<>();
+    	buttonHolder = new ArrayList<>();
 
         //Declare each button of calculator
-        Button btCE = new Button("CE"), btC = new Button("C"), btExp = new Button("Exp"),
-                btDiv = new Button("/"),  bt7 = new Button("7"), bt8 = new Button("8"),
-                bt9 = new Button("9"), btMult = new Button("*"), bt4 = new Button("4"),
-                bt5 = new Button("5"), bt6 = new Button("6"), btSub = new Button("-"),
-                bt1 = new Button("1"), bt2 = new Button("2"), bt3 = new Button("3"),
-                btAdd = new Button("+"), btNeg = new Button("Neg"), bt0 = new Button("0"),
-                btDec = new Button("."), btEquals = new Button("=");
+        btCE = new Button("CE"); btC = new Button("C"); btDel = new Button("<-");
+        btDiv = new Button("/"); bt7 = new Button("7"); bt8 = new Button("8");
+        bt9 = new Button("9"); btMult = new Button("*"); bt4 = new Button("4");
+        bt5 = new Button("5"); bt6 = new Button("6"); btSub = new Button("-");
+        bt1 = new Button("1"); bt2 = new Button("2"); bt3 = new Button("3");
+        btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
+        btDec = new Button("."); btSolve = new Button("=");
 
-        Collections.addAll(buttonHolder, btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
-                bt2, bt3, btAdd, btNeg, bt0, btDec, btEquals);
+        Collections.addAll(buttonHolder, btCE, btC, btDel, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
+                bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve);
 
         //Set each button so it will grow to fit space, and set to bold
-        for (int i = 0; i < buttonHolder.size(); i++)
-        {
-            buttonHolder.get(i).minWidthProperty().bind(this.widthProperty().divide(4.0));
-            buttonHolder.get(i).minHeightProperty().bind(this.heightProperty().divide(6.0));
-            buttonHolder.get(i).setFont(Font.font("sans serif", FontWeight.BOLD, 30 ));
-        }
+		for (int i = 0; i < buttonHolder.size(); i++)
+		{
+			buttonHolder.get(i).setFont(Font.font("sans serif", FontWeight.BOLD, 28 ));
+			buttonHolder.get(i).prefWidthProperty().bind(this.widthProperty().divide(4.0));
+			buttonHolder.get(i).prefHeightProperty().bind(this.heightProperty().divide(5.0));
+		}
 
-        //Create each row of the calculator as a hbox
-        HBox row1 = new HBox();
-        row1.getChildren().addAll(btCE, btC, btExp, btDiv);
-
-        HBox row2 = new HBox();
-        row2.getChildren().addAll(bt7, bt8, bt9, btMult);
-
-        HBox row3 = new HBox();
-        row3.getChildren().addAll(bt4, bt5, bt6, btSub);
-
-        HBox row4 = new HBox();
-        row4.getChildren().addAll(bt1, bt2, bt3, btAdd);
-
-        HBox row5 = new HBox();
-        row5.getChildren().addAll(btNeg, bt0, btDec, btEquals);
-
-        //Format display row
-        display.minWidthProperty().bind(this.minWidthProperty().divide(4.0));
-        display.minHeightProperty().bind(this.minHeightProperty().divide(6.0));
-
-        this.getChildren().addAll(display, row1, row2, row3, row4, row5);
-
-        //Assign lambda event handlers to each button
-        btC.setOnAction(e -> actions.clear());
-
-        btCE.setOnAction(e -> actions.clearEntry());
-
-        btExp.setOnAction(e -> actions.setOperator("^"));
-
-        btDiv.setOnAction(e -> actions.setOperator("/"));
-
-        btMult.setOnAction(e -> actions.setOperator("*"));
-
-        btSub.setOnAction(e -> actions.setOperator("-"));
-
-        btAdd.setOnAction(e -> actions.setOperator("+"));
-
-        btEquals.setOnAction(e -> actions.equals());
-
-        bt9.setOnAction(e -> actions.numberInput("9"));
-
-        bt8.setOnAction(e -> actions.numberInput("8"));
-
-        bt7.setOnAction(e -> actions.numberInput("7"));
-
-        bt6.setOnAction(e -> actions.numberInput("6"));
-
-        bt5.setOnAction(e -> actions.numberInput("5"));
-
-        bt4.setOnAction(e -> actions.numberInput("4"));
-
-        bt3.setOnAction(e -> actions.numberInput("3"));
-
-        bt2.setOnAction(e -> actions.numberInput("2"));
-
-        bt1.setOnAction(e -> actions.numberInput("1"));
-
-        bt0.setOnAction(e -> actions.numberInput("0"));
-
-        btDec.setOnAction(e -> actions.decimal());
-
-        btNeg.setOnAction(e -> actions.negative());
-
+		//Add buttons by column
+		this.addColumn(0, btCE, bt7, bt4, bt1, btNeg);
+		this.addColumn(1, btC, bt8, bt5, bt2, bt0);
+		this.addColumn(2, btDel, bt9, bt6, bt3, btDec);
+		this.addColumn(3, btDiv, btMult, btSub, btAdd, btSolve);
     }
 }

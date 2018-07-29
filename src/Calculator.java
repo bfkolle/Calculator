@@ -1,37 +1,26 @@
-import javafx.application.Application;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
+import javafx.scene.layout.BorderPane;
 
-/**
- * @author Brandon Kolle
- * 12/22/2016
+/*
+	Author: Brandon Kolle
+	7/29/2018
  */
 
-public class Calculator extends Application
+public class Calculator extends BorderPane
 {
-    private VBox container = new VBox();
-    private CalculatorButtons buttons = new CalculatorButtons();
+    private CalculatorDisplay display;
+    private CalculatorButtons buttons;
 
-    @Override
-    public void start(Stage primaryStage)
-    {
-        buttons.minWidthProperty().bind(container.widthProperty());
-        buttons.minHeightProperty().bind(container.heightProperty());
-        container.getChildren().add(buttons);
+    public Calculator()
+	{
+		display = new CalculatorDisplay();
+		buttons = new CalculatorButtons();
 
-        Scene scene = new Scene(container, 450, 450);
+		this.setTop(display);
+		setAlignment(display, Pos.CENTER_RIGHT);
 
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(450);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Calculator");
-        primaryStage.show();
-    }
+		this.setCenter(buttons);
 
-    public static void main(String[] args)
-    {
-        Application.launch(args);
-    }
+	}
 }
 
