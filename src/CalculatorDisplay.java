@@ -1,5 +1,6 @@
+import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -8,12 +9,25 @@ import javafx.scene.text.TextAlignment;
 	7/29/2018
  */
 
-class CalculatorDisplay extends Text
+class CalculatorDisplay extends VBox
 {
+    private Text topText;
+    private Text bottomText;
+
     public CalculatorDisplay()
     {
-        this.setTextAlignment(TextAlignment.RIGHT);
-        this.setFont(Font.font("sans serif", FontWeight.BOLD, 40));
-        this.setText("0");
+        //Top text is for displaying entered numbers and operation
+        //Bottom text is for displaying the result
+        topText = new Text("5");
+        bottomText = new Text("0");
+
+        topText.setTextAlignment(TextAlignment.RIGHT);
+        topText.setStyle("-fx-font-size: 18px; -fx-fill: white");
+
+        bottomText.setTextAlignment(TextAlignment.RIGHT);
+        bottomText.setStyle("-fx-font-size: 40px; -fx-fill: white");
+
+        this.setAlignment(Pos.CENTER_RIGHT);
+        this.getChildren().addAll(topText, bottomText);
     }
 }

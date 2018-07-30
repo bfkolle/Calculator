@@ -21,6 +21,7 @@ public class Calculator extends BorderPane
 
 		this.setCenter(buttons);
 
+		this.setStyle("-fx-background-color: #353535");
 	}
 }
 
