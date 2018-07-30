@@ -1,6 +1,5 @@
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -18,7 +17,7 @@ class CalculatorDisplay extends VBox
     {
         //Top text is for displaying entered numbers and operation
         //Bottom text is for displaying the result
-        topText = new Text("5");
+        topText = new Text();
         bottomText = new Text("0");
 
         topText.setTextAlignment(TextAlignment.RIGHT);

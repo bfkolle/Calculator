@@ -1,6 +1,5 @@
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,6 +38,7 @@ class CalculatorButtons extends GridPane
 					"-fx-background-radius: 0; -fx-font-size: 22px");
 		}
 
+		//Set the operator buttons to a separate styling scheme
 		for (int i = 3; i < buttonHolder.size(); i += 4)
 		{
 			buttonHolder.get(i).setStyle("-fx-background-color: #f4ab35; -fx-background-radius: 0;" +
@@ -52,7 +52,7 @@ class CalculatorButtons extends GridPane
 		this.addColumn(3, btDiv, btMult, btSub, btAdd, btSolve);
 
 		//Set spacing between buttons
-		this.setHgap(2);
-		this.setVgap(2);
+		this.setHgap(2.5);
+		this.setVgap(2.5);
     }
 }
