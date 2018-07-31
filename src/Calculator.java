@@ -1,3 +1,4 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 
@@ -21,7 +22,9 @@ public class Calculator extends BorderPane
 
 		this.setCenter(buttons);
 
+		//Modify look
 		this.setStyle("-fx-background-color: #353535");
+		this.setPadding(new Insets(0, 2.5, 0, 2.5));
 	}
 }
 

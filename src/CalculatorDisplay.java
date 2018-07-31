@@ -13,7 +13,7 @@ class CalculatorDisplay extends VBox
     private Text topText;
     private Text bottomText;
 
-    public CalculatorDisplay()
+    CalculatorDisplay()
     {
         //Top text is for displaying entered numbers and operation
         //Bottom text is for displaying the result

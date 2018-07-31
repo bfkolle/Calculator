@@ -13,7 +13,7 @@ class CalculatorButtons extends GridPane
     private Button btCE, btC, btDel, btDiv, bt7, bt8, bt9, btMult,
 			bt4, bt5, bt6, btSub, bt1, bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve;
 
-    public CalculatorButtons()
+    CalculatorButtons()
     {
 		ArrayList<Button> buttonHolder = new ArrayList<>();
 
