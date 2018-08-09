@@ -7,23 +7,17 @@ import java.util.ArrayDeque;
 
 public class ComputationEngine
 {
-	public ComputationEngine()
-	{
-
-	}
-
 	public String computeExpression(String infixExpression)
 	{
 		ArrayDeque<String> stack = new ArrayDeque<>();
-		String postfixExpression = convertToPostfix(infixExpression).trim();
+		String postfixExpression = convertToPostfix(infixExpression);
+		String[] postfixArray = postfixExpression.split("\\s");
 
-		for(int i = 0; i < postfixExpression.length(); i++)
+		for(String s : postfixArray)
 		{
-			char temp = postfixExpression.charAt(i);
-
-			if(Character.isDigit(temp))
+			if(isNumeric(s))
 			{
-				stack.push(Character.toString(temp));
+				stack.push(s);
 			}
 			else
 			{
@@ -31,21 +25,21 @@ public class ComputationEngine
 				double operandTwo = Double.parseDouble(stack.pop());
 				double operandOne = Double.parseDouble(stack.pop());
 
-				switch(temp)
+				switch(s)
 				{
-					case '+':
+					case "+":
 						result = Double.toString(operandOne + operandTwo);
 						stack.push(result);
 						break;
-					case '-':
+					case "-":
 						result = Double.toString(operandOne - operandTwo);
 						stack.push(result);
 						break;
-					case '*':
+					case "*":
 						result = Double.toString(operandOne * operandTwo);
 						stack.push(result);
 						break;
-					case '/':
+					case "/":
 						result = Double.toString(operandOne / operandTwo);
 						stack.push(result);
 						break;	
@@ -60,32 +54,31 @@ public class ComputationEngine
 	//Converts and infix expression to postfix
 	private String convertToPostfix(String infixExpression)
 	{
-		ArrayDeque<Character> stack = new ArrayDeque<>();
+		ArrayDeque<String> stack = new ArrayDeque<>();
 		String postfixString = "";
+		String[] infixArray = infixExpression.split("\\s");
 
 		//Convert the expression character by character
-		for(int i = 0; i < infixExpression.length(); i++)
+		for(String s : infixArray)
 		{
-			char temp = infixExpression.charAt(i);
-
 			//Append to postfix string if the character is an operand
-			if(Character.isDigit(temp))
+			if(isNumeric(s))
 			{
-				postfixString += temp;
+				postfixString += s + " ";
 			}
 
 			//Push onto stack if the operator is a '('
-			else if(temp == '(')
+			else if(s == "(")
 			{
-				stack.push(temp);
+				stack.push(s);
 			}
 
 			//If the operator is a ')' pop from stack until a '('
-			else if(temp == ')')
+			else if(s == ")")
 			{
-				while(!stack.isEmpty() && stack.peek() != '(')
+				while(!stack.isEmpty() && stack.peek() != "(")
 				{
-					postfixString += stack.pop();
+					postfixString += stack.pop() + " ";
 				}
 
 				//Get rid of '('
@@ -95,36 +88,49 @@ public class ComputationEngine
 			//The character is an operator
 			else
 			{
-				while(!stack.isEmpty() && getPrecedence(temp) <= getPrecedence(stack.peek()))
+				while(!stack.isEmpty() && getPrecedence(s) <= getPrecedence(stack.peek()))
 				{
-					postfixString += stack.pop();
+					postfixString += stack.pop() + " ";
 				}
-				stack.push(temp);
+				stack.push(s);
 			}
 		}
 
 		//Pop all remaining operators from the stack
 		while(!stack.isEmpty())
 		{
-			postfixString += stack.pop();
+			postfixString += stack.pop() + " ";
 		}
 		return postfixString;
 	}
 
 	//Gets the precedence of an infix operator for postfix conversion
-	private int getPrecedence(char operator)
+	private int getPrecedence(String operator)
 	{
 			switch(operator)
 			{
-				case '+':
-				case '-':
+				case "+":
+				case "-":
 					return 1;
-				case '*':
-				case '/':
+				case "*":
+				case "/":
 					return 2;
-				case '^':
+				case "^":
 					return 3;
 			}
 			return -1;
+	}
+
+	private boolean isNumeric(String exp)
+	{
+		try
+		{
+			Double.parseDouble(exp);
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
 	}
 }

@@ -24,7 +24,7 @@ public class Calculator extends BorderPane
     public Calculator()
 	{
 		ArrayList<Button> buttonHolder = new ArrayList<>();
-		infixExpression = new String();
+		infixExpression = "";
 		display = new CalculatorDisplay();
 		buttons = new GridPane();
 		compEngine = new ComputationEngine();
@@ -77,5 +77,33 @@ public class Calculator extends BorderPane
 		buttons.addColumn(1, btC, bt8, bt5, bt2, bt0);
 		buttons.addColumn(2, btExp, bt9, bt6, bt3, btDec);
 		buttons.addColumn(3, btDiv, btMult, btSub, btAdd, btSolve);
-	}
+
+		//Number event managers
+		bt0.setOnAction(e -> display.updateDisplay("0"));
+		bt1.setOnAction(e -> display.updateDisplay("1"));
+		bt2.setOnAction(e -> display.updateDisplay("2"));
+		bt3.setOnAction(e -> display.updateDisplay("3"));
+		bt4.setOnAction(e -> display.updateDisplay("4"));
+		bt5.setOnAction(e -> display.updateDisplay("5"));
+		bt6.setOnAction(e -> display.updateDisplay("6"));
+		bt7.setOnAction(e -> display.updateDisplay("7"));
+		bt8.setOnAction(e -> display.updateDisplay("8"));
+		bt9.setOnAction(e -> display.updateDisplay("9"));
+
+		//Operator event managers
+		btDiv.setOnAction(e -> display.updateDisplay("/"));
+		btMult.setOnAction(e -> display.updateDisplay("*"));
+		btSub.setOnAction(e -> display.updateDisplay("-"));
+		btAdd.setOnAction(e -> display.updateDisplay("+"));
+		btSolve.setOnAction(e -> {
+			infixExpression = display.getDisplay();
+			System.out.println(infixExpression);
+			display.resetDisplay();
+			System.out.println(compEngine.computeExpression(infixExpression));
+			display.updateDisplay(compEngine.computeExpression(infixExpression));
+			});
+
+		//Other event managers
+		btC.setOnAction(e -> display.resetDisplay());	
+		}
 }
