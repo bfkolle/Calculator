@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.lang.Runtime;
 
 /*
 	Author: Brandon Kolle
@@ -38,34 +39,32 @@ public class Calculator extends BorderPane
         btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
         btDec = new Button("."); btSolve = new Button("=");
 
-		//Add display to top
+		//Add nodes
 		this.setTop(display);
-		setAlignment(display, Pos.CENTER_RIGHT);
-
-		//Add buttons to center
 		this.setCenter(buttons);
 
 		//Modify look of calculator
-		this.setStyle("-fx-background-color: #353535");
-		this.setPadding(new Insets(0, 2.5, 0, 2.5));
+		this.getStyleClass().add("calculator");
+		this.setPadding(new Insets(0, 1.25, 0, 1.25));
+		setAlignment(display, Pos.CENTER_RIGHT);
 
         Collections.addAll(buttonHolder, btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
                 bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve);
 
-        //Set each button so it will grow to fit space
+        //Set each button so it will grow to fit space, and set its style class
 		for (Button currentButton : buttonHolder)
 		{
 			currentButton.prefWidthProperty().bind(this.widthProperty().divide(4.0));
 			currentButton.prefHeightProperty().bind(this.heightProperty().divide(5.0));
-			currentButton.setStyle("-fx-background-color: #707172; -fx-text-fill: white; " +
-					"-fx-background-radius: 0; -fx-font-size: 22px");
-		}
-
-		//Set the operator buttons to a separate styling scheme
-		for (int i = 3; i < buttonHolder.size(); i += 4)
-		{
-			buttonHolder.get(i).setStyle("-fx-background-color: #f4ab35; -fx-background-radius: 0;" +
-					" -fx-font-size: 22px");
+			
+			switch(currentButton.getText())
+			{
+				case "+": case "-": case "x": case "/": case "=":
+					currentButton.getStyleClass().add("operatorButton");
+					break;
+				default:
+					currentButton.getStyleClass().add("otherButton");
+			}
 		}
 
 		//Set spacing between buttons
@@ -97,13 +96,12 @@ public class Calculator extends BorderPane
 		btAdd.setOnAction(e -> display.updateDisplay("+"));
 		btSolve.setOnAction(e -> {
 			infixExpression = display.getDisplay();
-			System.out.println(infixExpression);
 			display.resetDisplay();
-			System.out.println(compEngine.computeExpression(infixExpression));
 			display.updateDisplay(compEngine.computeExpression(infixExpression));
 			});
 
 		//Other event managers
-		btC.setOnAction(e -> display.resetDisplay());	
+		btC.setOnAction(e -> display.resetDisplay());
+		btCE.setOnAction(e -> display.clearBottom());
 		}
 }

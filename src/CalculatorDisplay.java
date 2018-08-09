@@ -23,10 +23,10 @@ class CalculatorDisplay extends VBox
         resultFlag = false;
 
         topText.setTextAlignment(TextAlignment.RIGHT);
-        topText.setStyle("-fx-font-size: 14px; -fx-fill: white");
+        topText.getStyleClass().add("topDisplay");
 
         bottomText.setTextAlignment(TextAlignment.RIGHT);
-        bottomText.setStyle("-fx-font-size: 40px; -fx-fill: white");
+        bottomText.getStyleClass().add("bottomDisplay");
 
         this.setAlignment(Pos.CENTER_RIGHT);
         this.getChildren().addAll(topText, bottomText);
@@ -70,6 +70,11 @@ class CalculatorDisplay extends VBox
         bottomText.setText("0");
     }
 
+    void clearBottom()
+    {
+        bottomText.setText("0");
+    }
+
     void toggleResultFlag()
     {
         resultFlag = !resultFlag;
@@ -91,10 +96,7 @@ class CalculatorDisplay extends VBox
 
         switch(exp)
         {
-            case "+":
-            case "-":
-            case "*":
-            case "/":
+            case "+": case "-": case "*": case "/":
                 return true;
         }
         return false;

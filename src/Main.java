@@ -18,6 +18,8 @@ public class Main extends Application
     {
         Scene scene = new Scene(calculator);
 
+        scene.getStylesheets().add("css/main.css");
+        
         primaryStage.setScene(scene);
 		primaryStage.setMinHeight(STAGE_HEIGHT);
 		primaryStage.setMinWidth(STAGE_WIDTH);

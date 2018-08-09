@@ -1,0 +1,37 @@
+/*
+	Author: Brandon Kolle
+	7/29/2018
+ */
+
+.calculator
+{
+	-fx-background-color: #353535;
+}
+
+.otherButton
+{
+	-fx-background-color: #707172;
+	-fx-text-fill: white;
+	-fx-background-radius: 0; -fx-font-size: 22px;
+}
+
+.operatorButton
+{
+	-fx-background-color: #f4ab35;
+	-fx-background-radius: 0;
+	-fx-font-size: 22px;
+}
+
+.topDisplay
+{
+	-fx-font-size: 14px; 
+	-fx-fill: white;
+}
+
+.bottomDisplay
+{
+	-fx-font-size: 40px; 
+	-fx-fill: white;
+}
+
+
