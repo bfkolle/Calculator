@@ -30,15 +30,6 @@ public class Calculator extends BorderPane
 		buttons = new GridPane();
 		compEngine = new ComputationEngine();
 
-		//Declare each button of calculator
-        btCE = new Button("CE"); btC = new Button("C"); btExp = new Button("^");
-        btDiv = new Button("/"); bt7 = new Button("7"); bt8 = new Button("8");
-        bt9 = new Button("9"); btMult = new Button("x"); bt4 = new Button("4");
-        bt5 = new Button("5"); bt6 = new Button("6"); btSub = new Button("-");
-        bt1 = new Button("1"); bt2 = new Button("2"); bt3 = new Button("3");
-        btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
-        btDec = new Button("."); btSolve = new Button("=");
-
 		//Add nodes
 		this.setTop(display);
 		this.setCenter(buttons);
@@ -47,6 +38,15 @@ public class Calculator extends BorderPane
 		this.getStyleClass().add("calculator");
 		this.setPadding(new Insets(0, 1.25, 0, 1.25));
 		setAlignment(display, Pos.CENTER_RIGHT);
+
+		//Declare each button of calculator
+        btCE = new Button("CE"); btC = new Button("C"); btExp = new Button("^");
+        btDiv = new Button("/"); bt7 = new Button("7"); bt8 = new Button("8");
+        bt9 = new Button("9"); btMult = new Button("x"); bt4 = new Button("4");
+        bt5 = new Button("5"); bt6 = new Button("6"); btSub = new Button("-");
+        bt1 = new Button("1"); bt2 = new Button("2"); bt3 = new Button("3");
+        btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
+        btDec = new Button("."); btSolve = new Button("=");
 
         Collections.addAll(buttonHolder, btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
                 bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve);
@@ -78,30 +78,72 @@ public class Calculator extends BorderPane
 		buttons.addColumn(3, btDiv, btMult, btSub, btAdd, btSolve);
 
 		//Number event managers
-		bt0.setOnAction(e -> display.updateDisplay("0"));
-		bt1.setOnAction(e -> display.updateDisplay("1"));
-		bt2.setOnAction(e -> display.updateDisplay("2"));
-		bt3.setOnAction(e -> display.updateDisplay("3"));
-		bt4.setOnAction(e -> display.updateDisplay("4"));
-		bt5.setOnAction(e -> display.updateDisplay("5"));
-		bt6.setOnAction(e -> display.updateDisplay("6"));
-		bt7.setOnAction(e -> display.updateDisplay("7"));
-		bt8.setOnAction(e -> display.updateDisplay("8"));
-		bt9.setOnAction(e -> display.updateDisplay("9"));
+		bt0.setOnAction(e -> updateDisplay("0"));
+		bt1.setOnAction(e -> updateDisplay("1"));
+		bt2.setOnAction(e -> updateDisplay("2"));
+		bt3.setOnAction(e -> updateDisplay("3"));
+		bt4.setOnAction(e -> updateDisplay("4"));
+		bt5.setOnAction(e -> updateDisplay("5"));
+		bt6.setOnAction(e -> updateDisplay("6"));
+		bt7.setOnAction(e -> updateDisplay("7"));
+		bt8.setOnAction(e -> updateDisplay("8"));
+		bt9.setOnAction(e -> updateDisplay("9"));
 
 		//Operator event managers
-		btDiv.setOnAction(e -> display.updateDisplay("/"));
-		btMult.setOnAction(e -> display.updateDisplay("*"));
-		btSub.setOnAction(e -> display.updateDisplay("-"));
-		btAdd.setOnAction(e -> display.updateDisplay("+"));
+		btDiv.setOnAction(e -> updateDisplay("/"));
+		btMult.setOnAction(e -> updateDisplay("*"));
+		btSub.setOnAction(e -> updateDisplay("-"));
+		btAdd.setOnAction(e -> updateDisplay("+"));
 		btSolve.setOnAction(e -> {
 			infixExpression = display.getDisplay();
 			display.resetDisplay();
-			display.updateDisplay(compEngine.computeExpression(infixExpression));
+			updateDisplay(compEngine.computeExpression(infixExpression));
 			});
 
 		//Other event managers
 		btC.setOnAction(e -> display.resetDisplay());
-		btCE.setOnAction(e -> display.clearBottom());
-		}
+		btCE.setOnAction(e -> display.resetBottomDisplay());
+	}
+
+	//To handle the logic with updating the calculator display
+	private void updateDisplay(String exp)
+	{
+		String topDisplay = display.getTopDisplay();
+        String bottomDisplay = removeZero(display.getBottomDisplay());
+        
+        //If the input is an operator, move displayed expression to top display and reset bottom
+        if(isOperator(exp))
+        {
+            display.setTopDisplay(topDisplay + " " + bottomDisplay + " " + exp);
+            display.setBottomDisplay("0");
+
+        }
+        else
+        {
+            display.setBottomDisplay(bottomDisplay + exp);
+        }
+	}
+	
+
+    //Returns an empty string if the starting value of bottom text is 0
+    private String removeZero(String exp)
+    {
+        if(exp == "0")
+        {
+            return "";
+        }
+        return exp;
+    }
+
+    private boolean isOperator(String exp)
+    {
+        exp = exp.trim();
+
+        switch(exp)
+        {
+            case "+": case "-": case "*": case "/":
+                return true;
+        }
+        return false;
+    }
 }
