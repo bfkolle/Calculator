@@ -15,17 +15,20 @@ import java.lang.Runtime;
 public class Calculator extends BorderPane
 {
 	private String infixExpression;
+	private boolean isNewExp; //If the displayed number is a new expression
+	private boolean isResult; //If the displayed number is the result of a solve operation
     private CalculatorDisplay display;
     private ComputationEngine compEngine;
     private GridPane buttons;
     private Button btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult,
 			bt4, bt5, bt6, btSub, bt1, bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve;
 
-
     public Calculator()
 	{
 		ArrayList<Button> buttonHolder = new ArrayList<>();
 		infixExpression = "";
+		isNewExp = true;
+		isResult = false;
 		display = new CalculatorDisplay();
 		buttons = new GridPane();
 		compEngine = new ComputationEngine();
@@ -88,6 +91,7 @@ public class Calculator extends BorderPane
 		bt7.setOnAction(e -> updateDisplay("7"));
 		bt8.setOnAction(e -> updateDisplay("8"));
 		bt9.setOnAction(e -> updateDisplay("9"));
+		btDec.setOnAction(e -> handleDecimal()); //Decimal is considered number input for processing purposes
 
 		//Operator event managers
 		btDiv.setOnAction(e -> updateDisplay("/"));
@@ -96,13 +100,20 @@ public class Calculator extends BorderPane
 		btAdd.setOnAction(e -> updateDisplay("+"));
 		btSolve.setOnAction(e -> {
 			infixExpression = display.getDisplay();
-			display.resetDisplay();
+			display.resetDisplay();		
 			updateDisplay(compEngine.computeExpression(infixExpression));
+            isResult = true;
 			});
 
 		//Other event managers
-		btC.setOnAction(e -> display.resetDisplay());
-		btCE.setOnAction(e -> display.resetBottomDisplay());
+		btC.setOnAction(e -> {
+			display.resetDisplay();
+			resetFlags();
+			});
+		btCE.setOnAction(e -> {
+			display.resetBottomDisplay();
+			resetFlags();
+		});
 	}
 
 	//To handle the logic with updating the calculator display
@@ -111,21 +122,32 @@ public class Calculator extends BorderPane
 		String topDisplay = display.getTopDisplay();
         String bottomDisplay = removeZero(display.getBottomDisplay());
         
-        //If the input is an operator, move displayed expression to top display and reset bottom
+        //Check that input is an operator and is not a new expression
         if(isOperator(exp))
         {
-            display.setTopDisplay(topDisplay + " " + bottomDisplay + " " + exp);
-            display.setBottomDisplay("0");
-
+        	if(!isNewExp)
+        	{
+        		display.setTopDisplay(topDisplay + " " + bottomDisplay + " " + exp);
+            	display.setBottomDisplay("0");
+        	}
+        	isNewExp = true;
         }
+        //If displayed number is a result, don't append numbers, override the whole number
+        else if(isResult)
+        {
+        	display.setBottomDisplay(exp);
+            isNewExp = false;
+            isResult = false;
+        }
+        //Append inputted number to the end of the displayed number
         else
         {
             display.setBottomDisplay(bottomDisplay + exp);
+            isNewExp = false;
         }
 	}
 	
-
-    //Returns an empty string if the starting value of bottom text is 0
+    //Returns an empty string if the starting value of bottom display is 0
     private String removeZero(String exp)
     {
         if(exp == "0")
@@ -145,5 +167,26 @@ public class Calculator extends BorderPane
                 return true;
         }
         return false;
+    }
+
+    //Reset expression flags when CE or C buttons are pressed
+    private void resetFlags()
+    {
+    	isNewExp = true;
+    	isResult = false;
+    }
+
+    //Handles special cases where the bottom number is zero. 
+    //Normally the 0 is discarded, but this is needed for a decimal
+    private void handleDecimal()
+    {
+    	if(display.getBottomDisplay().equals("0"))
+    	{
+    		updateDisplay("0.");
+    	}
+    	else
+    	{
+    		updateDisplay(".");
+    	}
     }
 }
