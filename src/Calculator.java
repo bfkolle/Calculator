@@ -169,7 +169,7 @@ public class Calculator extends BorderPane
         return false;
     }
 
-    //Reset expression flags when CE or C buttons are pressed
+    //Reset expression flags to starting values when CE or C buttons are pressed
     private void resetFlags()
     {
     	isNewExp = true;

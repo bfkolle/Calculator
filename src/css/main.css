@@ -15,11 +15,21 @@
 	-fx-background-radius: 0; -fx-font-size: 22px;
 }
 
+.otherButton:hover
+{
+	-fx-background-color: #5b5c5e;
+}
+
 .operatorButton
 {
 	-fx-background-color: #f4ab35;
 	-fx-background-radius: 0;
 	-fx-font-size: 22px;
+}
+
+.operatorButton:hover
+{
+	-fx-background-color: #ce8c21;
 }
 
 .topDisplay
