@@ -13,22 +13,22 @@ public class Main extends Application
 	private final int STAGE_WIDTH = 315;
 	private Calculator calculator = new Calculator();
 
-    @Override
-    public void start(Stage primaryStage)
-    {
-        Scene scene = new Scene(calculator);
+	@Override
+	public void start(Stage primaryStage)
+	{
+		Scene scene = new Scene(calculator);
 
-        scene.getStylesheets().add("css/main.css");
-        
-        primaryStage.setScene(scene);
+		scene.getStylesheets().add("css/main.css");
+		
+		primaryStage.setScene(scene);
 		primaryStage.setMinHeight(STAGE_HEIGHT);
 		primaryStage.setMinWidth(STAGE_WIDTH);
-        primaryStage.setTitle("Calculator");
-        primaryStage.show();
-    }
+		primaryStage.setTitle("Calculator");
+		primaryStage.show();
+	}
 
-    public static void main(String[] args)
-    {
-        Application.launch(args);
-    }
+	public static void main(String[] args)
+	{
+		Application.launch(args);
+	}
 }

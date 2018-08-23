@@ -20,13 +20,13 @@ public class Calculator extends BorderPane
 	private boolean isResult; //If the displayed number is the result of a solve operation
 
 	//Calculator components
-    private CalculatorDisplay display;
-    private ComputationEngine compEngine;
-    private GridPane buttons;
-    private Button btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult,
+	private CalculatorDisplay display;
+	private ComputationEngine compEngine;
+	private GridPane buttons;
+	private Button btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult,
 			bt4, bt5, bt6, btSub, bt1, bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve;
 
-    public Calculator()
+	public Calculator()
 	{
 		ArrayList<Button> buttonHolder = new ArrayList<>();
 		infixExpression = "";
@@ -44,18 +44,18 @@ public class Calculator extends BorderPane
 		this.setCenter(buttons);
 
 		//Declare each button of calculator
-        btCE = new Button("CE"); btC = new Button("C"); btExp = new Button("^");
-        btDiv = new Button("/"); bt7 = new Button("7"); bt8 = new Button("8");
-        bt9 = new Button("9"); btMult = new Button("x"); bt4 = new Button("4");
-        bt5 = new Button("5"); bt6 = new Button("6"); btSub = new Button("-");
-        bt1 = new Button("1"); bt2 = new Button("2"); bt3 = new Button("3");
-        btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
-        btDec = new Button("."); btSolve = new Button("=");
+		btCE = new Button("CE"); btC = new Button("C"); btExp = new Button("^");
+		btDiv = new Button("/"); bt7 = new Button("7"); bt8 = new Button("8");
+		bt9 = new Button("9"); btMult = new Button("x"); bt4 = new Button("4");
+		bt5 = new Button("5"); bt6 = new Button("6"); btSub = new Button("-");
+		bt1 = new Button("1"); bt2 = new Button("2"); bt3 = new Button("3");
+		btAdd = new Button("+"); btNeg = new Button("Neg"); bt0 = new Button("0");
+		btDec = new Button("."); btSolve = new Button("=");
 
-        Collections.addAll(buttonHolder, btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
-                bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve);
+		Collections.addAll(buttonHolder, btCE, btC, btExp, btDiv, bt7, bt8, bt9, btMult, bt4, bt5, bt6, btSub, bt1,
+				bt2, bt3, btAdd, btNeg, bt0, btDec, btSolve);
 
-        //Set each button so it will grow to fit space, and set its style class
+		//Set each button so it will grow to fit space, and set its style class
 		for (Button currentButton : buttonHolder)
 		{
 			currentButton.prefWidthProperty().bind(buttons.widthProperty().divide(4.0));
@@ -104,7 +104,7 @@ public class Calculator extends BorderPane
 			infixExpression = display.getDisplay();
 			display.resetDisplay();		
 			updateDisplay(compEngine.computeExpression(infixExpression));
-            isResult = true;
+			isResult = true;
 		});
 
 		//Other event managers
@@ -123,87 +123,87 @@ public class Calculator extends BorderPane
 	private void updateDisplay(String exp)
 	{
 		String topDisplay = display.getTopDisplay();
-        String bottomDisplay = removeZero(display.getBottomDisplay());
-        
-        //Check that input is an operator and is not a new expression
-        if(isOperator(exp))
-        {
-        	if(!isNewExp)
-        	{
-        		display.setTopDisplay(topDisplay + " " + bottomDisplay + " " + exp);
-            	display.setBottomDisplay("0");
-        	}
-        	isNewExp = true;
-        }
-        //If displayed number is a result, don't append numbers, override the whole number
-        else if(isResult)
-        {
-        	display.setBottomDisplay(exp);
-            isNewExp = false;
-            isResult = false;
-        }
-        //Append inputted number to the end of the displayed number
-        else
-        {
-            display.setBottomDisplay(bottomDisplay + exp);
-            isNewExp = false;
-        }
+		String bottomDisplay = removeZero(display.getBottomDisplay());
+		
+		//Check that input is an operator and is not a new expression
+		if(isOperator(exp))
+		{
+			if(!isNewExp)
+			{
+				display.setTopDisplay(topDisplay + " " + bottomDisplay + " " + exp);
+				display.setBottomDisplay("0");
+			}
+			isNewExp = true;
+		}
+		//If displayed number is a result, don't append numbers, override the whole number
+		else if(isResult)
+		{
+			display.setBottomDisplay(exp);
+			isNewExp = false;
+			isResult = false;
+		}
+		//Append inputted number to the end of the displayed number
+		else
+		{
+			display.setBottomDisplay(bottomDisplay + exp);
+			isNewExp = false;
+		}
 	}
 	
-    //Returns an empty string if the starting value of bottom display is 0
-    private String removeZero(String exp)
-    {
-        if(exp == "0")
-        {
-            return "";
-        }
-        return exp;
-    }
+	//Returns an empty string if the starting value of bottom display is 0
+	private String removeZero(String exp)
+	{
+		if(exp == "0")
+		{
+			return "";
+		}
+		return exp;
+	}
 
-    private boolean isOperator(String exp)
-    {
-        exp = exp.trim();
+	private boolean isOperator(String exp)
+	{
+		exp = exp.trim();
 
-        switch(exp)
-        {
-            case "+": case "-": case "*": case "/":
-                return true;
-        }
-        return false;
-    }
+		switch(exp)
+		{
+			case "+": case "-": case "*": case "/":
+				return true;
+		}
+		return false;
+	}
 
-    //Reset expression flags to starting values when CE or C buttons are pressed
-    private void resetFlags()
-    {
-    	isNewExp = true;
-    	isResult = false;
-    }
+	//Reset expression flags to starting values when CE or C buttons are pressed
+	private void resetFlags()
+	{
+		isNewExp = true;
+		isResult = false;
+	}
 
-    //Handles logic with adding a decimal to a number
-    private void handleDecimal()
-    {
-    	boolean isDecimal = display.getBottomDisplay().contains(".");
+	//Handles logic with adding a decimal to a number
+	private void handleDecimal()
+	{
+		boolean isDecimal = display.getBottomDisplay().contains(".");
 
-    	//If displayed number is '0', write '0.' instead of '.'
-    	if(display.getBottomDisplay().equals("0") && !isDecimal)
-    	{
-    		updateDisplay("0.");
-    	}
-    	else if(!isDecimal)
-    	{
-    		updateDisplay(".");
-    	}
-    }
+		//If displayed number is '0', write '0.' instead of '.'
+		if(display.getBottomDisplay().equals("0") && !isDecimal)
+		{
+			updateDisplay("0.");
+		}
+		else if(!isDecimal)
+		{
+			updateDisplay(".");
+		}
+	}
 
-    //Handles logic associated with making a number negative
-    private void handleNegative()
-    {
-    	double num = Double.parseDouble(display.getBottomDisplay());
+	//Handles logic associated with making a number negative
+	private void handleNegative()
+	{
+		double num = Double.parseDouble(display.getBottomDisplay());
 
-    	if(!(num == 0))
-    	{
+		if(!(num == 0))
+		{
 			num = num * -1;
-    		display.setBottomDisplay(Double.toString(num));
-    	}
-    }
+			display.setBottomDisplay(Double.toString(num));
+		}
+	}
 }
