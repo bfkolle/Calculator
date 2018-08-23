@@ -92,7 +92,7 @@ public class Calculator extends BorderPane
 		bt7.setOnAction(e -> updateDisplay(bt7.getText()));
 		bt8.setOnAction(e -> updateDisplay(bt8.getText()));
 		bt9.setOnAction(e -> updateDisplay(bt9.getText()));
-		btDec.setOnAction(e -> handleDecimal()); //Decimal is considered number input for processing purposes
+		btDec.setOnAction(e -> handleDecimal()); //Decimal is considered number input for computation purposes
 		btNeg.setOnAction(e -> handleNegative()); //Negative is also considered a number input 
 
 		//Operator event managers

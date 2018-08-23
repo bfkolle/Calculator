@@ -20,6 +20,11 @@
 	-fx-background-color: #5b5c5e;
 }
 
+.otherButton:pressed
+{
+	-fx-background-color: #404142;
+}
+
 .operatorButton
 {
 	-fx-background-color: #f4ab35;
@@ -30,6 +35,11 @@
 .operatorButton:hover
 {
 	-fx-background-color: #ce8c21;
+}
+
+.operatorButton:pressed
+{
+	-fx-background-color: #ab6a02;
 }
 
 .topDisplay
