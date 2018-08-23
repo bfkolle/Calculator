@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 public class Main extends Application
 {
 	private final int STAGE_HEIGHT = 400;
-	private final int STAGE_WIDTH = 310;
+	private final int STAGE_WIDTH = 315;
 	private Calculator calculator = new Calculator();
 
     @Override

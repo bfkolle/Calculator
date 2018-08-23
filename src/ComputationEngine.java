@@ -1,6 +1,8 @@
 import java.util.ArrayDeque;
 
 /*
+	Class designed to take an infix expression and compute its solved value
+	
 	Author: Brandon Kolle
 	7/29/2018
  */

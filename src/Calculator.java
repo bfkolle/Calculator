@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.lang.Runtime;
 
 /*
 	Author: Brandon Kolle
@@ -15,8 +14,12 @@ import java.lang.Runtime;
 public class Calculator extends BorderPane
 {
 	private String infixExpression;
+
+	//Operation flags
 	private boolean isNewExp; //If the displayed number is a new expression
 	private boolean isResult; //If the displayed number is the result of a solve operation
+
+	//Calculator components
     private CalculatorDisplay display;
     private ComputationEngine compEngine;
     private GridPane buttons;
@@ -33,14 +36,12 @@ public class Calculator extends BorderPane
 		buttons = new GridPane();
 		compEngine = new ComputationEngine();
 
+		this.setPadding(new Insets(0, 2.5, 2.5, 2.5));
+		this.getStyleClass().add("calculator");
+
 		//Add nodes
 		this.setTop(display);
 		this.setCenter(buttons);
-
-		//Modify look of calculator
-		this.getStyleClass().add("calculator");
-		this.setPadding(new Insets(0, 1.25, 0, 1.25));
-		setAlignment(display, Pos.CENTER_RIGHT);
 
 		//Declare each button of calculator
         btCE = new Button("CE"); btC = new Button("C"); btExp = new Button("^");
@@ -57,8 +58,8 @@ public class Calculator extends BorderPane
         //Set each button so it will grow to fit space, and set its style class
 		for (Button currentButton : buttonHolder)
 		{
-			currentButton.prefWidthProperty().bind(this.widthProperty().divide(4.0));
-			currentButton.prefHeightProperty().bind(this.heightProperty().divide(5.0));
+			currentButton.prefWidthProperty().bind(buttons.widthProperty().divide(4.0));
+			currentButton.prefHeightProperty().bind(buttons.heightProperty().divide(5.0));
 			
 			switch(currentButton.getText())
 			{
@@ -81,17 +82,18 @@ public class Calculator extends BorderPane
 		buttons.addColumn(3, btDiv, btMult, btSub, btAdd, btSolve);
 
 		//Number event managers
-		bt0.setOnAction(e -> updateDisplay("0"));
-		bt1.setOnAction(e -> updateDisplay("1"));
-		bt2.setOnAction(e -> updateDisplay("2"));
-		bt3.setOnAction(e -> updateDisplay("3"));
-		bt4.setOnAction(e -> updateDisplay("4"));
-		bt5.setOnAction(e -> updateDisplay("5"));
-		bt6.setOnAction(e -> updateDisplay("6"));
-		bt7.setOnAction(e -> updateDisplay("7"));
-		bt8.setOnAction(e -> updateDisplay("8"));
-		bt9.setOnAction(e -> updateDisplay("9"));
+		bt0.setOnAction(e -> updateDisplay(bt0.getText()));
+		bt1.setOnAction(e -> updateDisplay(bt1.getText()));
+		bt2.setOnAction(e -> updateDisplay(bt2.getText()));
+		bt3.setOnAction(e -> updateDisplay(bt3.getText()));
+		bt4.setOnAction(e -> updateDisplay(bt4.getText()));
+		bt5.setOnAction(e -> updateDisplay(bt5.getText()));
+		bt6.setOnAction(e -> updateDisplay(bt6.getText()));
+		bt7.setOnAction(e -> updateDisplay(bt7.getText()));
+		bt8.setOnAction(e -> updateDisplay(bt8.getText()));
+		bt9.setOnAction(e -> updateDisplay(bt9.getText()));
 		btDec.setOnAction(e -> handleDecimal()); //Decimal is considered number input for processing purposes
+		btNeg.setOnAction(e -> handleNegative()); //Negative is also considered a number input 
 
 		//Operator event managers
 		btDiv.setOnAction(e -> updateDisplay("/"));
@@ -103,13 +105,14 @@ public class Calculator extends BorderPane
 			display.resetDisplay();		
 			updateDisplay(compEngine.computeExpression(infixExpression));
             isResult = true;
-			});
+		});
 
 		//Other event managers
 		btC.setOnAction(e -> {
 			display.resetDisplay();
 			resetFlags();
-			});
+		});
+		
 		btCE.setOnAction(e -> {
 			display.resetBottomDisplay();
 			resetFlags();
@@ -176,17 +179,31 @@ public class Calculator extends BorderPane
     	isResult = false;
     }
 
-    //Handles special cases where the bottom number is zero. 
-    //Normally the 0 is discarded, but this is needed for a decimal
+    //Handles logic with adding a decimal to a number
     private void handleDecimal()
     {
-    	if(display.getBottomDisplay().equals("0"))
+    	boolean isDecimal = display.getBottomDisplay().contains(".");
+
+    	//If displayed number is '0', write '0.' instead of '.'
+    	if(display.getBottomDisplay().equals("0") && !isDecimal)
     	{
     		updateDisplay("0.");
     	}
-    	else
+    	else if(!isDecimal)
     	{
     		updateDisplay(".");
+    	}
+    }
+
+    //Handles logic associated with making a number negative
+    private void handleNegative()
+    {
+    	double num = Double.parseDouble(display.getBottomDisplay());
+
+    	if(!(num == 0))
+    	{
+			num = num * -1;
+    		display.setBottomDisplay(Double.toString(num));
     	}
     }
 }

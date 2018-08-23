@@ -8,13 +8,13 @@ import javafx.scene.text.TextAlignment;
 	7/29/2018
  */
 
-class CalculatorDisplay extends VBox
+public class CalculatorDisplay extends VBox
 {
     private Text topText;
     private Text bottomText;
     boolean resultFlag;
 
-    CalculatorDisplay()
+    public CalculatorDisplay()
     {
         //Top text is for displaying entered numbers and operation
         //Bottom text is for displaying the result
@@ -32,43 +32,43 @@ class CalculatorDisplay extends VBox
         this.getChildren().addAll(topText, bottomText);
     }
 
-    String getDisplay()
+    public String getDisplay()
     {
         return topText.getText() + " " + bottomText.getText();
     }
 
-    String getTopDisplay()
+    public String getTopDisplay()
     {
         return topText.getText();
     }
 
-    String getBottomDisplay()
+    public String getBottomDisplay()
     {
         return bottomText.getText();
     }
 
-    void setTopDisplay(String exp)
+    public void setTopDisplay(String exp)
     {
         topText.setText(exp.trim());
     }
 
-    void setBottomDisplay(String exp)
+    public void setBottomDisplay(String exp)
     {
         bottomText.setText(exp.trim());
     }
 
-    void resetDisplay()
+    public void resetDisplay()
     {
         topText.setText("");
         bottomText.setText("0");
     }
 
-    void resetTopDisplay()
+    public void resetTopDisplay()
     {
         topText.setText("0");
     }
 
-    void resetBottomDisplay()
+    public void resetBottomDisplay()
     {
         bottomText.setText("0");
     }
