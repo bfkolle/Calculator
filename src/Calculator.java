@@ -100,6 +100,7 @@ public class Calculator extends BorderPane
 		btMult.setOnAction(e -> updateDisplay("*"));
 		btSub.setOnAction(e -> updateDisplay("-"));
 		btAdd.setOnAction(e -> updateDisplay("+"));
+		btExp.setOnAction(e -> updateDisplay("^"));
 		btSolve.setOnAction(e -> {
 			infixExpression = display.getDisplay();
 			display.resetDisplay();		
@@ -166,7 +167,7 @@ public class Calculator extends BorderPane
 
 		switch(exp)
 		{
-			case "+": case "-": case "*": case "/":
+			case "+": case "-": case "*": case "/": case "^":
 				return true;
 		}
 		return false;

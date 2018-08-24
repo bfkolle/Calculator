@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.lang.Math;
 
 /*
 	Class designed to take an infix expression and compute its solved value
@@ -44,7 +45,11 @@ public class ComputationEngine
 					case "/":
 						result = Double.toString(operandOne / operandTwo);
 						stack.push(result);
-						break;	
+						break;
+					case "^":
+						result = Double.toString(Math.pow(operandOne, operandTwo));
+						stack.push(result);
+						break;
 					default:
 						break;
 				}
