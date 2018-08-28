@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.lang.Math;
+import java.math.BigDecimal;
 
 /*
 	Class designed to take an infix expression and compute its solved value
@@ -25,29 +26,29 @@ public class ComputationEngine
 			else
 			{
 				String result;
-				double operandTwo = Double.parseDouble(stack.pop());
-				double operandOne = Double.parseDouble(stack.pop());
+				BigDecimal operandTwo = new BigDecimal(stack.pop());
+				BigDecimal operandOne = new BigDecimal(stack.pop());
 
 				switch(s)
 				{
 					case "+":
-						result = Double.toString(operandOne + operandTwo);
+						result = operandOne.add(operandTwo).toString();
 						stack.push(result);
 						break;
 					case "-":
-						result = Double.toString(operandOne - operandTwo);
+						result = operandOne.subtract(operandTwo).toString();
 						stack.push(result);
 						break;
 					case "*":
-						result = Double.toString(operandOne * operandTwo);
+						result = operandOne.multiply(operandTwo).toString();
 						stack.push(result);
 						break;
 					case "/":
-						result = Double.toString(operandOne / operandTwo);
+						result = operandOne.divide(operandTwo).toString();
 						stack.push(result);
 						break;
 					case "^":
-						result = Double.toString(Math.pow(operandOne, operandTwo));
+						result = operandOne.pow(operandTwo.intValue()).toString();
 						stack.push(result);
 						break;
 					default:
