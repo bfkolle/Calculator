@@ -1,6 +1,7 @@
 import java.util.ArrayDeque;
 import java.lang.Math;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /*
 	Class designed to take an infix expression and compute its solved value
@@ -44,7 +45,7 @@ public class ComputationEngine
 						stack.push(result);
 						break;
 					case "/":
-						result = operandOne.divide(operandTwo).toString();
+						result = operandOne.divide(operandTwo, 12, RoundingMode.HALF_UP).toString();
 						stack.push(result);
 						break;
 					case "^":

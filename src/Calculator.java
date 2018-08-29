@@ -36,7 +36,8 @@ public class Calculator extends BorderPane
 		buttons = new GridPane();
 		compEngine = new ComputationEngine();
 
-		this.setPadding(new Insets(0, 2.5, 2.5, 2.5));
+		//Set styling for calculator
+		this.setPadding(new Insets(0, 2.5, 0, 2.5));
 		this.getStyleClass().add("calculator");
 
 		//Add nodes

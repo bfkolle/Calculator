@@ -1,6 +1,8 @@
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.text.TextAlignment;
 
 /*
@@ -10,66 +12,71 @@ import javafx.scene.text.TextAlignment;
 
 public class CalculatorDisplay extends VBox
 {
-	private Text topText;
-	private Text bottomText;
-	boolean resultFlag;
+	private StringProperty topText;
+	private StringProperty bottomText;
+	private Label topDisplay;
+	private Label bottomDisplay;
 
 	public CalculatorDisplay()
 	{
-		//Top text is for displaying entered numbers and operation
-		//Bottom text is for displaying the result
-		topText = new Text();
-		bottomText = new Text("0");
-		resultFlag = false;
+		//Top display is for displaying entered numbers and operation
+		//Bottom display is for displaying the result
+		topDisplay = new Label();
+		bottomDisplay = new Label();
+		topText = new SimpleStringProperty("");
+		bottomText = new SimpleStringProperty("0");
 
-		topText.setTextAlignment(TextAlignment.RIGHT);
-		topText.getStyleClass().add("topDisplay");
+		topDisplay.textProperty().bind(topText);
+		bottomDisplay.textProperty().bind(bottomText);
 
-		bottomText.setTextAlignment(TextAlignment.RIGHT);
-		bottomText.getStyleClass().add("bottomDisplay");
+		topDisplay.setTextAlignment(TextAlignment.RIGHT);
+		topDisplay.getStyleClass().add("topDisplay");
+
+		bottomDisplay.setTextAlignment(TextAlignment.RIGHT);
+		bottomDisplay.getStyleClass().add("bottomDisplay");
 
 		this.setAlignment(Pos.CENTER_RIGHT);
-		this.getChildren().addAll(topText, bottomText);
+		this.getChildren().addAll(topDisplay, bottomDisplay);
 	}
 
 	public String getDisplay()
 	{
-		return topText.getText() + " " + bottomText.getText();
+		return topText.get() + " " + bottomText.get();
 	}
 
 	public String getTopDisplay()
 	{
-		return topText.getText();
+		return topText.get();
 	}
 
 	public String getBottomDisplay()
 	{
-		return bottomText.getText();
+		return bottomText.get();
 	}
 
 	public void setTopDisplay(String exp)
 	{
-		topText.setText(exp.trim());
+		topText.setValue(exp.trim());
 	}
 
 	public void setBottomDisplay(String exp)
 	{
-		bottomText.setText(exp.trim());
+		bottomText.setValue(exp.trim());
 	}
 
 	public void resetDisplay()
 	{
-		topText.setText("");
-		bottomText.setText("0");
+		topText.setValue("");
+		bottomText.setValue("0");
 	}
 
 	public void resetTopDisplay()
 	{
-		topText.setText("0");
+		topText.setValue("0");
 	}
 
 	public void resetBottomDisplay()
 	{
-		bottomText.setText("0");
+		bottomText.setValue("0");
 	}
 }

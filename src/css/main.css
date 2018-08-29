@@ -45,11 +45,11 @@
 .topDisplay
 {
 	-fx-font-size: 14px; 
-	-fx-fill: white;
+	-fx-text-fill: white;
 }
 
 .bottomDisplay
 {
 	-fx-font-size: 40px; 
-	-fx-fill: white;
+	-fx-text-fill: white;
 }
