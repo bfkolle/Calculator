@@ -1,11 +1,8 @@
 import java.util.ArrayDeque;
-import java.lang.Math;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /*
-	Class designed to take an infix expression and compute its solved value
-	
 	Author: Brandon Kolle
 	7/29/2018
  */

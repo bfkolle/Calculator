@@ -8,36 +8,53 @@
 	-fx-background-color: #353535;
 }
 
-.otherButton
+.numberButton
 {
 	-fx-background-color: #707172;
 	-fx-text-fill: white;
 	-fx-background-radius: 0; -fx-font-size: 22px;
 }
 
-.otherButton:hover
+.numberButton:hover
 {
-	-fx-background-color: #5b5c5e;
+	-fx-background-color: #454647;
 }
 
-.otherButton:pressed
+.numberButton:pressed
 {
 	-fx-background-color: #404142;
 }
 
-.operatorButton
+.miscOperatorButton
+{
+	-fx-background-color: #555759;
+	-fx-text-fill: white;
+	-fx-background-radius: 0; -fx-font-size: 22px;
+}
+
+.miscOperatorButton:hover
+{
+	-fx-background-color: #454647;
+}
+
+.miscOperatorButton:pressed
+{
+	-fx-background-color: #404142;
+}
+
+.rightSideOperatorButton
 {
 	-fx-background-color: #f4ab35;
 	-fx-background-radius: 0;
 	-fx-font-size: 22px;
 }
 
-.operatorButton:hover
+.rightSideOperatorButton:hover
 {
 	-fx-background-color: #ce8c21;
 }
 
-.operatorButton:pressed
+.rightSideOperatorButton:pressed
 {
 	-fx-background-color: #ab6a02;
 }
